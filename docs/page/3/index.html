@@ -95,19 +95,6 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">April 4, 2017</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/this-is-what-a-memory-leak-looks-like/">This is what a memory leak looks like</a></h1>
-      <div class="content">
-        Left, side of this chart, VSZ (virtual memory) and RSS (RAM) over time (obtained via ps) for a process using poor implementation of KafkaClient in java, which is creating a new kafka client per GET request. This is bad.
-Right side of the chart, current performance once I fixed the previous developer&rsquo;s code, and implemented a singleton.
-        
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-      </div>
       <h2 class="subtitle is-6">March 23, 2017</h2>
       <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-changing-loglevel-in-apache-spark/">Note to self: Changing loglevel in apache Spark</a></h1>
       <div class="content">
@@ -177,6 +164,27 @@ For those that come looking for that info here it is:
 1.TL:DR. How to get your Certificate of Coverage for self employed persons in Spain. This is what you do.
         
         <a class="button is-link" href="https://manugarri.github.io/blog/posts/the-sorry-state-of-transparency-in-spain-where-is-my-certificate/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
+        
+      </div>
+    </article>
+    
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+      </div>
+      <h2 class="subtitle is-6">January 18, 2017</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/how-to-mock-http-endpoints-in-golang/">How to mock http endpoints in Golang with custom ports</a></h1>
+      <div class="content">
+        So I was updating the testing suite in one of Tribe&rsquo;s microservices. This one in particular deals with sending the postbacks to the right endpoints.
+If you search for testing http requests, chances are you will almost always stumble upon an example like:
+import ( &quot;log&quot; &quot;net/http&quot; &quot;net/http/httptest&quot; ) ts := httptest.NewServer(http.HandlerFunc(func(w ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { fmt.Fprintln(w, &quot;Hello, client&quot;) })) defer ts.Close() res, err := http.Get(ts.URL) if err !
+        
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/how-to-mock-http-endpoints-in-golang/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>
