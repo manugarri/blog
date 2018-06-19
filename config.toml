@@ -1,4 +1,4 @@
-baseurl = "manugarri.github.io/blog/"
+baseurl = "http://manugarri.github.io/blog/"
 languageCode = "en"
 title = "Manugarri's blog"
 theme = "kiss"
