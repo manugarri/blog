@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Manugarri&#39;s blog</title>
-    <link>http://manugarri.github.io/blog/posts/</link>
+    <link>https://manugarri.github.io/blog/posts/</link>
     <description>Recent content in Posts on Manugarri&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Tue, 19 Jun 2018 20:49:51 +0200</lastBuildDate>
     
-	<atom:link href="http://manugarri.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://manugarri.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hellow_world</title>
-      <link>http://manugarri.github.io/blog/posts/hellow_world/</link>
+      <link>https://manugarri.github.io/blog/posts/hellow_world/</link>
       <pubDate>Tue, 19 Jun 2018 20:49:51 +0200</pubDate>
       
-      <guid>http://manugarri.github.io/blog/posts/hellow_world/</guid>
+      <guid>https://manugarri.github.io/blog/posts/hellow_world/</guid>
       <description>Hey</description>
     </item>
     
