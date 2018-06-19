@@ -95,39 +95,16 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">June 19, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/hellow_world/">Hellow_world</a></h1>
+      <h2 class="subtitle is-6">October 20, 2014</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/what-i-learned-today-5/">What I learned today</a></h1>
       <div class="content">
-        Hey
+        Work 
+ I learned about httpbin , a very simple yet useful api to test other apis, provides useful endpoints for very simple tasks  For example, to find an aws public ip you can use httpbin like:
+ curl http://httpbin.org/ip   I learned about docopt a very nice and intuitive module to add arguments to a command line program in python.
+Life 
+ I learned that the reason there are almost no female sushi chefs is because of the traditional belief that women&rsquo;s menstruation, perfume and makeup can &ldquo;affect the delicate and sophisticated form of Japanese cooking&rdquo;.
         
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-      </div>
-      <h2 class="subtitle is-6">May 22, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-pyspark-failling-with-error-while-instantiating-org-apache-spark-sql-hive-hivesessionstate/">Note to self. Pyspark failling with &#39;Error while instantiating &#39;org.apache.spark.sql.hive.HiveSessionState&#39;</a></h1>
-      <div class="content">
-        If you run pyspark and see this error (it happens in scala-shell as well):
-Error while instantiating ‘org.apache.spark.sql.hive.HiveSessionState’  The solution is easy, yet ridiculous. 1. Create the folder /tmp/hive 2. Give it chmod permissions sudo chmod -R 777 /tmp/hive
-Found here
-        
-      </div>
-    </article>
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-      </div>
-      <h2 class="subtitle is-6">April 19, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/">Note to self: Fixing encoding in Golang ascii85</a></h1>
-      <div class="content">
-        Yesterday I spent a few hours dealing with what I like to call &ldquo;the edges of StackOverflow&rdquo;. By that I mean those situations in which you are trying to solve a programming problem (mostly a bug) and you have no idea why its happening, and even worse, no amount of search (in StackOverflow or Github) yield any information that might seem somewhat related to the issue.
-I think this xkcd strip puts it quite clearly:
-        
-        <a class="button is-link" href="https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/" style="height:28px">
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/what-i-learned-today-5/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>
@@ -141,17 +118,15 @@ I think this xkcd strip puts it quite clearly:
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">January 31, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/">Note to self:Print statements not showing up on systemd logs? Do this</a></h1>
+      <h2 class="subtitle is-6">October 18, 2014</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/what-i-learned-today-6/">What I learned today</a></h1>
       <div class="content">
-        Let&rsquo;s assume we have a service set up as follows:
-[Unit] Description=systemd_microservice [Service] User=USER Group=GROUP WorkingDirectory=systemd_working_directory ExecStart=/usr/bin/python python_scripts.py SuccessExitStatus=143 TimeoutStopSec=10 Restart=on-failure RestartSec=10 [Install] WantedBy=multi-user.target  And inside python_script.py you have a bunch of print statements.
-You set up your service and your surprise when you do
-sudo journalctl -f -u python_service.service
-The logs dont show up!
-The reason is python stdout is being buffered when redirected to journal, and thus it only shows up in blocks
+        Work 
+ I learned how to use [pyinstaller]() to convert a python application to a binary file. As easy as:
+pyinstaller entrypoint.py -F   To produce a self-contained binary file on the dist subfolder from where you called the command.
+ I learned about mpl3d, a library that convert Pandas matplotlib base plots into beautiful, d3.js based plots. To use mpl3d on an iPython notebook, a single line of code is necessary:
         
-        <a class="button is-link" href="https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/" style="height:28px">
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/what-i-learned-today-6/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>
@@ -165,13 +140,59 @@ The reason is python stdout is being buffered when redirected to journal, and th
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">October 25, 2017</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-disable-caps-lock-in-ubuntu-16-04/">Note to self: Disable caps lock in Ubuntu 16.04</a></h1>
+      <h2 class="subtitle is-6">October 16, 2014</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/the-path-to-code-part-2/">The Path to Code. Part 2</a></h1>
       <div class="content">
-        Sources: here and here
-This post shows how to disable the caps lock key and enables it only by pressing both shift keys together.
-1. Install DCONF $ sudo apt-get install dconf-tools
-2. Disable caps lock and reenable it as pressing both shift keys at once: $ setxkbmap -option &quot;caps:none&quot; $ setxkbmap -option &quot;shift:both_capslock&quot;
+        This is a continuation of a previous post that aims to be a very subjective guide for those who, like me not long ago, have a strong interest in programming but do not know how to start.
+On part 1 you got some advice about what being a programmer, you picked up a language to learn ( and hopefully you chose python) and you more or less learned that language syntax.
+        
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/the-path-to-code-part-2/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
+        
+      </div>
+    </article>
+    
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+      </div>
+      <h2 class="subtitle is-6">October 16, 2014</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/what-i-learned-today-4/">What I learned today</a></h1>
+      <div class="content">
+        Work 
+ I learned that Pandas can interact with sqlAlchemy and many other python modules creating an amazing data ecosystem  Image from tonight&rsquo;s PyData NYC meetup. Courtesy of Jeff Rebacks
+ I learned of Project Jupyter, a version of iPython Notebook that works with Juliam Python and R  Life  I learned of MIT&rsquo;s App Inventor, an esay way of learning how to develop Android applications. I folowed this awesome tutorials.
+        
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/what-i-learned-today-4/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
+        
+      </div>
+    </article>
+    
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+      </div>
+      <h2 class="subtitle is-6">October 6, 2014</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/what-i-learned-today-3/">What I learned today</a></h1>
+      <div class="content">
+        Work 
+ I learned that in Docker, if you want to see the status of the last container you built, instead of doing docker ps -a (which lists all the containers, and thus can force you to scroll up to see the last one), you can do docker ps -l, whcih instead just lists the latest container.  By the way, if you are playing with Docker (or to be more precise, fighting with it) and you have a loooong list of containers running, you can add this alias to your .
+        
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/what-i-learned-today-3/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
         
       </div>
     </article>
@@ -184,12 +205,23 @@ This post shows how to disable the caps lock key and enables it only by pressing
       <div class="level-left">
         <div class="level-item">
           
+          <a class="button" href="/blog/page/8/">
+            <span class="icon is-small is-marginless">
+              <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <polyline points="15 18 9 12 15 6"/>
+    
+  </svg>
+            </span>
+            Newer
+          </a>
+          
         </div>
       </div>
       <div class="level-right is-marginless">
         <div class="level-item">
           
-          <a class="button" href="/blog/page/2/">
+          <a class="button" href="/blog/page/10/">
             Older
             <span class="icon is-small is-marginless">
               <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>

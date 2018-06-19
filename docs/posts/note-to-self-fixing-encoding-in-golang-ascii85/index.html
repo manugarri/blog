@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Note to self: Fixing encoding in Golang ascii85 | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">April 19, 2018</h2>
+    <h1 class="title">Note to self: Fixing encoding in Golang ascii85</h1>
+    
+    <div class="content">
+      <p>Yesterday I spent a few hours dealing with what I like to call <strong>&ldquo;the edges of StackOverflow&rdquo;</strong>. By that I mean those situations in which you are trying to solve a programming problem (mostly a bug) and you have no idea why its happening, and even worse, no amount of search (in StackOverflow or Github) yield any information that might seem somewhat related to the issue.</p>
+
+<p>I think this xkcd strip puts it quite clearly:</p>
+
+<p><img src="https://imgs.xkcd.com/comics/wisdom_of_the_ancients.png" alt="xkcd" /></p>
+
+<p>The issue in question was this. I am working on working on a project involving cookies. The standard procedure in programmatic media buying (i.e., online ads) is to codify the cookie data in <a href="https://en.wikipedia.org/wiki/Ascii85" target="_blank">ascii85 (or base85)</a>.</p>
+
+<p>So I was implementing the encoding/decoding package using Golang&rsquo;s <a href="https://golang.org/pkg/encoding/ascii85" target="_blank">ascii85</a> package as follows:</p>
+
+<pre><code>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;encoding/json&quot;
+)
+
+
+
+
+type User struct {
+   Age int
+   Interests []string
+}
+
+func decodeCookie(cookieValue string) string {
+	cookieEncodedBytes := []byte(cookieValue)
+	cookieDecodedBytes := make([]byte, len(cookieEncodedBytes))
+	nCookieDecodedBytes, _, _ := ascii85.Decode(cookieDecodedBytes, cookieEncodedBytes, true)
+	cookieDecodedBytes = cookieDecodedBytes[:nCookieDecodedBytes]
+	return string(cookieDecodedBytes)
+}
+
+func encodeCookie(cookieValue string) string {
+	cookieBytes := []byte(cookieValue)
+	cookieEncodedb85Bytes := make([]byte, ascii85.MaxEncodedLen(len(cookieBytes)))
+	_ = ascii85.Encode(cookieEncodedb85Bytes, cookieBytes)
+	cookieEncodedString := string(cookieEncodedb85Bytes)
+	return cookieEncodedString
+}
+
+
+func main() {
+    user := User{
+          25, 
+          []string{&quot;music&quot;, &quot;football&quot;},
+    }
+    
+    userJson, _ := json.Marshal(user) 
+    fmt.Println(&quot;User as json&quot;, string(userJson))
+
+    userB85Encoded := encodeCookie(string(userJson))
+    fmt.Println(&quot;User as jsonB85&quot;, userB85Encoded)
+
+
+    userB85Decoded := decodeCookie(userB85Encoded)
+    fmt.Println(&quot;User as json&quot;, userB85Encoded)
+
+    decodedUser := User{}
+    err := json.Unmarshal([]byte(userB85Decoded), &amp;decodedUser)
+    if err != nil {
+        fmt.Println(&quot;Error deserializing json bytes&quot;, err)
+    }
+    
+   fmt.Println(fmt.Sprintf(&quot;Deserialized User:%v&quot;, decodedUser))
+}
+
+</code></pre>
+
+<p>This code will print the following output :</p>
+
+<pre><code>User as json {&quot;Age&quot;:25,&quot;Interests&quot;:[&quot;music&quot;,&quot;football&quot;]}
+User as jsonB85 HQkagAKj/j2(TqCDKKH1ATMs7,!&amp;pPD09o6@j3HJAoDU0@UX(h,$fTs
+User as json {&quot;Age&quot;:25,&quot;Interests&quot;:[&quot;music&quot;,&quot;football&quot;]}
+Error deserializing json bytes invalid character '\x00' after top-level value
+Deserialized User:{0 []}
+</code></pre>
+
+<p>So we see that, what we thought would be an easy encoding/decoding (easy encoding, HA!) implementation is failing for some reason. The error says:</p>
+
+<p><code>Error deserializing json bytes invalid character '\x00' after top-level value</code></p>
+
+<p>But where is that character? The character <code>\x00</code> is the null byte, so when printed it does not show up in the output.</p>
+
+<p>We can go further by checking the length of the encoded/encoded strings to see if there is a mismatch by adding a few lines:</p>
+
+<pre><code>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;encoding/json&quot;
+)
+
+
+
+
+type User struct {
+   Age int
+   Interests []string
+}
+
+func decodeCookie(cookieValue string) string {
+	cookieEncodedBytes := []byte(cookieValue)
+	cookieDecodedBytes := make([]byte, len(cookieEncodedBytes))
+	nCookieDecodedBytes, _, _ := ascii85.Decode(cookieDecodedBytes, cookieEncodedBytes, true)
+	cookieDecodedBytes = cookieDecodedBytes[:nCookieDecodedBytes]
+	return string(cookieDecodedBytes)
+}
+
+func encodeCookie(cookieValue string) string {
+	cookieBytes := []byte(cookieValue)
+	cookieEncodedb85Bytes := make([]byte, ascii85.MaxEncodedLen(len(cookieBytes)))
+	_ = ascii85.Encode(cookieEncodedb85Bytes, cookieBytes)
+	cookieEncodedString := string(cookieEncodedb85Bytes)
+	return cookieEncodedString
+}
+
+
+func main() {
+    user := User{
+          25, 
+          []string{&quot;music&quot;, &quot;football&quot;},
+    }
+    
+    userOriginalJson, _ := json.Marshal(user) 
+    fmt.Println(&quot;User as json&quot;, string(userOriginalJson))
+
+    userB85Encoded := encodeCookie(string(userOriginalJson))
+    fmt.Println(&quot;User as jsonB85&quot;, userB85Encoded)
+
+
+    userB85DecodedJson := decodeCookie(userB85Encoded)
+    fmt.Println(&quot;User as json&quot;, userB85DecodedJson)
+
+    decodedUser := User{}
+    err := json.Unmarshal([]byte(userB85DecodedJson), &amp;decodedUser)
+    if err != nil {
+        fmt.Println(&quot;Error deserializing json bytes&quot;, err)
+    }
+    
+   fmt.Println(fmt.Sprintf(&quot;Deserialized User:%v&quot;, decodedUser))
+
+   //NOW WE ADD THESE LINES
+
+   fmt.Println(&quot;length of original json string&quot;, len(userOriginalJson))
+   fmt.Println(&quot;length of decoded json string&quot;, len(userB85DecodedJson))
+}
+</code></pre>
+
+<p>Now the two last lines of output will show:</p>
+
+<pre><code>length of original json string 43
+length of decoded json string 44
+</code></pre>
+
+<p>So we see that <strong>there is a difference between the original and the decoded string!</strong> How is that possible?</p>
+
+<p>The only hint I found about why this might be happening is in the ridiculously succint (as usual) ascii85 go documentation:</p>
+
+<p>|[&hellip;] The encoding handles 4-byte chunks, using a special encoding for the last fragment[&hellip;]</p>
+
+<p>So what if the issue is that because the input length to decodeCookie (the json string) is not a multiple of 4 <code>ascii85</code> adds null values to the nearest multiple, turning a 43 length byte array into a 44 length byte array?</p>
+
+<p>We can fix this by removing the null bytes from the output byte array, using the convenient <code>bytes.trim</code> function:</p>
+
+<pre><code>package main
+
+import (
+	&quot;fmt&quot;
+	&quot;bytes&quot;
+	&quot;encoding/json&quot;
+	&quot;encoding/ascii85&quot;
+)
+
+
+
+
+type User struct {
+   Age int
+   Interests []string
+}
+
+func decodeCookie(cookieValue string) string {
+	cookieEncodedBytes := []byte(cookieValue)
+	cookieDecodedBytes := make([]byte, len(cookieEncodedBytes))
+	nCookieDecodedBytes, _, _ := ascii85.Decode(cookieDecodedBytes, cookieEncodedBytes, true)
+	cookieDecodedBytes = cookieDecodedBytes[:nCookieDecodedBytes]
+	
+		//ascii85 adds /x00 null bytes at the end
+	cookieDecodedBytes = bytes.Trim(cookieDecodedBytes, &quot;\x00&quot;)
+	return string(cookieDecodedBytes)
+}
+
+func encodeCookie(cookieValue string) string {
+	cookieBytes := []byte(cookieValue)
+	cookieEncodedb85Bytes := make([]byte, ascii85.MaxEncodedLen(len(cookieBytes)))
+	_ = ascii85.Encode(cookieEncodedb85Bytes, cookieBytes)
+	cookieEncodedString := string(cookieEncodedb85Bytes)
+	return cookieEncodedString
+}
+
+func main() {
+    user := User{
+          25, 
+          []string{&quot;music&quot;, &quot;football&quot;},
+    }
+    
+    userOriginalJson, _ := json.Marshal(user) 
+    fmt.Println(&quot;User as json&quot;, string(userOriginalJson))
+
+    userB85Encoded := encodeCookie(string(userOriginalJson))
+    fmt.Println(&quot;User as jsonB85&quot;, userB85Encoded)
+
+
+    userB85DecodedJson := decodeCookie(userB85Encoded)
+    fmt.Println(&quot;User as json&quot;, userB85DecodedJson)
+
+    decodedUser := User{}
+    err := json.Unmarshal([]byte(userB85DecodedJson), &amp;decodedUser)
+    if err != nil {
+        fmt.Println(&quot;Error deserializing json bytes&quot;, err)
+    }
+    
+   fmt.Println(fmt.Sprintf(&quot;Deserialized User:%v&quot;, decodedUser))
+
+   //NOW WE ADD THESE LINES
+
+   fmt.Println(&quot;length of original json string&quot;, len(userOriginalJson))
+   fmt.Println(&quot;length of decoded json string&quot;, len(userB85DecodedJson))
+</code></pre>
+
+<p><em><a href="https://play.golang.org/p/o_RZVT6JLj-" target="_blank">here</a> is a go playground link to the code above.</em></p>
+
+<p>Now the output is as expected:</p>
+
+<pre><code>User as json {&quot;Age&quot;:25,&quot;Interests&quot;:[&quot;music&quot;,&quot;football&quot;]}
+User as jsonB85 HQkagAKj/j2(TqCDKKH1ATMs7,!&amp;pPD09o6@j3HJAoDU0@UX(h,$fTs
+User as json {&quot;Age&quot;:25,&quot;Interests&quot;:[&quot;music&quot;,&quot;football&quot;]}
+Deserialized User:{25 [music football]}
+length of original json string 43
+length of decoded json string 43
+</code></pre>
+
+<p>And that fixes the issue! I hope that in the future the Golang community will focus a bit more on documentation and examples.</p>
+
+<p>Thats all, thanks for reading!</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

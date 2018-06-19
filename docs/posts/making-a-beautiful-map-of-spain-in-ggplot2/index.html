@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Making a Beautiful Map of Spain in ggplot2 | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">February 4, 2017</h2>
+    <h1 class="title">Making a Beautiful Map of Spain in ggplot2</h1>
+    
+    <div class="content">
+      
+
+<p>A few weeks ago I read an article in which Timo Grossenbacher showed how he managed to plot, in my opinion, <a href="https://timogrossenbacher.ch/2016/12/beautiful-thematic-maps-with-ggplot2-only/" target="_blank">one of the most beautiful maps I have ever seen</a>.</p>
+
+<p>So I went and tried to replicate it.</p>
+
+<p>First of all, here is the map.</p>
+
+<p><img src="http://i.imgur.com/MrNL3bE.png" alt="mapa" /></p>
+
+<p>As usual, you can download the code &amp; data included in this post in <a href="https://github.com/manugarri/spain_census_map" target="_blank">github</a>. I pushed some earlier versions of the map as well, with different color breaks so you can see the impact that binning has in data visualization.</p>
+
+<h4 id="the-code">The code.</h4>
+
+<p>First we import all the required libraries</p>
+
+<pre><code class="language-prettyprint">setwd(&quot;/YOUR WORK DIR HERE/&quot;)
+
+if (!require(rgdal)) {
+    install.packages(&quot;rgdal&quot;, repos = &quot;http://cran.us.r-project.org&quot;)
+    require(rgdal)
+  }
+  
+  if (!require(rgeos)) {
+    install.packages(&quot;rgeos&quot;, repos = &quot;http://cran.us.r-project.org&quot;)
+    require(rgeos)
+  }
+  if (!require(rgdal)) {
+    install.packages(&quot;rgdal&quot;, repos = &quot;http://cran.us.r-project.org&quot;)
+    require(rgdal)
+  }
+  if (!require(raster)) {
+    install.packages(&quot;raster&quot;, repos = &quot;http://cran.us.r-project.org&quot;)
+    require(raster)
+  }
+  if(!require(ggplot2)) {
+    install.packages(&quot;ggplot2&quot;, repos=&quot;http://cloud.r-project.org&quot;)
+    require(ggplot2)
+  }
+  if(!require(viridis)) {
+    install.packages(&quot;viridis&quot;, repos=&quot;http://cloud.r-project.org&quot;)
+    require(viridis)
+  }
+  if(!require(dplyr)) {
+    install.packages(&quot;dplyr&quot;, repos = &quot;https://cloud.r-project.org/&quot;)
+    require(dplyr)
+  }
+  if(!require(gtable)) {
+    install.packages(&quot;gtable&quot;, repos = &quot;https://cloud.r-project.org/&quot;)
+    require(gtable)
+  }
+  if(!require(grid)) {
+    install.packages(&quot;grid&quot;, repos = &quot;https://cloud.r-project.org/&quot;)
+    require(grid)
+  }
+  if(!require(tidyr)) {
+    install.packages(&quot;tidyr&quot;, repos = &quot;https://cloud.r-project.org/&quot;)
+    require(tidyr)
+  }
+}
+</code></pre>
+
+<p>Then we load the data. I found a shapefile containing Spanish municipalities in <a href="http://www.arcgis.com/home/item.html?id=2e47bb12686d4b4b9d4c179c75d4eb78" target="_blank">ArcGis</a>, with no attribution provided.</p>
+
+<p>To obtain Spain&rsquo;s census data, I used the <em><sarcasm>wonderful</sarcasm></em> data extraction <a href="http://www.ine.es/censos2011_datos/cen11_datos_detallados.htm" target="_blank">tool</a> provided by the Spanish National Statistics Institute. The tool is a nightmare to use, so if you want the data just go ahead and get it from my repo.</p>
+
+<pre><code class="language-prettyprint">data_spain &lt;- read.csv(&quot;Censuses2011_2.csv&quot;, stringsAsFactors = F)
+data_spain$municipality_code &lt;- as.numeric(separate(data_spain, Municipality.of.residence, &quot;municipality_code&quot;, &quot; &quot;)$municipality_code)
+data_spain$People &lt;- as.numeric(data_spain$People)
+data_spain$Average.age &lt;- as.numeric(data_spain$Average.age)
+
+# We load the shapefile and convert it into a dataframe
+municipalities_spain &lt;- readOGR(&quot;Municipios_ETRS89_30N/Municipios_ETRS89_30N.shp&quot;, layer=&quot;Municipios_ETRS89_30N&quot;)
+map_data_fortified_spain &lt;- fortify(municipalities_spain, region = &quot;Codigo&quot;) %&gt;% mutate(id = as.numeric(id))
+
+# now we join the census data with the geometric data on the municipality_code
+map_data_spain &lt;- map_data_fortified_spain %&gt;% left_join(data_spain, by = c(&quot;id&quot; = &quot;municipality_code&quot;))   %&gt;% fill(Average.age)
+rm(data_spain)
+rm(map_data_fortified_spain)
+rm(municipalities_spain)
+</code></pre>
+
+<p>And finally, the plotting code.</p>
+
+<pre><code>pretty_breaks &lt;- c(40,44,48,52,56)
+
+# find the extremes
+minVal &lt;- min(map_data_spain$Average.age, na.rm = T)
+maxVal &lt;- max(map_data_spain$Average.age, na.rm = T)
+# compute labels
+labels &lt;- c()
+brks &lt;- c(minVal, pretty_breaks, maxVal)
+# round the labels (actually, only the extremes)
+for(idx in 1:length(brks)){
+  labels &lt;- c(labels,round(brks[idx + 1], 2))
+}
+
+labels &lt;- labels[1:length(labels)-1]
+# define a new variable on the data with the breaks
+map_data_spain$brks &lt;- cut(map_data_spain$Average.age, 
+                          breaks = brks, 
+                          include.lowest = TRUE, 
+                          labels = labels)
+
+brks_scale &lt;- levels(map_data_spain$brks)
+labels_scale &lt;- rev(brks_scale)
+
+
+theme_map &lt;- function(...) {
+  theme_minimal() +
+    theme(
+      text = element_text(family = &quot;Ubuntu Regular&quot;, color = &quot;# 22211d&quot;),
+      axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      # panel.grid.minor = element_line(color = &quot;# ebebe5&quot;, size = 0.2),
+      panel.grid.major = element_line(color = &quot;# ebebe5&quot;, size = 0.2),
+      panel.grid.minor = element_blank(),
+      plot.background = element_rect(fill = &quot;# f5f5f2&quot;, color = NA), 
+      panel.background = element_rect(fill = &quot;# f5f5f2&quot;, color = NA), 
+      legend.background = element_rect(fill = &quot;# f5f5f2&quot;, color = NA),
+      panel.border = element_blank(),
+      ...
+    )
+}
+
+# crazy function just to extend the legend extremes
+extendLegendWithExtremes &lt;- function(p){
+  p_grob &lt;- ggplotGrob(p)
+  legend &lt;- gtable_filter(p_grob, &quot;guide-box&quot;)
+  legend_grobs &lt;- legend$grobs[[1]]$grobs[[1]]
+  # grab the first key of legend
+  legend_first_key &lt;- gtable_filter(legend_grobs, &quot;key-3-1-1&quot;)
+  legend_first_key$widths &lt;- unit(2, units = &quot;cm&quot;)
+  # modify its width and x properties to make it longer
+  legend_first_key$grobs[[1]]$width &lt;- unit(2, units = &quot;cm&quot;)
+  legend_first_key$grobs[[1]]$x &lt;- unit(0.15, units = &quot;cm&quot;)
+  
+  # last key of legend
+  legend_last_key &lt;- gtable_filter(legend_grobs, &quot;key-3-6-1&quot;)
+  legend_last_key$widths &lt;- unit(2, units = &quot;cm&quot;)
+  # analogous
+  legend_last_key$grobs[[1]]$width &lt;- unit(2, units = &quot;cm&quot;)
+  legend_last_key$grobs[[1]]$x &lt;- unit(1.02, units = &quot;cm&quot;)
+  
+  # grab the last label so we can also shift its position
+  legend_last_label &lt;- gtable_filter(legend_grobs, &quot;label-5-6&quot;)
+  legend_last_label$grobs[[1]]$x &lt;- unit(2, units = &quot;cm&quot;)
+  
+  # Insert new color legend back into the combined legend
+  legend_grobs$grobs[legend_grobs$layout$name == &quot;key-3-1-1&quot;][[1]] &lt;- 
+    legend_first_key$grobs[[1]]
+  legend_grobs$grobs[legend_grobs$layout$name == &quot;key-3-6-1&quot;][[1]] &lt;- 
+    legend_last_key$grobs[[1]]
+  legend_grobs$grobs[legend_grobs$layout$name == &quot;label-5-6&quot;][[1]] &lt;- 
+    legend_last_label$grobs[[1]]
+  
+  # finally, I need to create a new label for the minimum value 
+  new_first_label &lt;- legend_last_label$grobs[[1]]
+  new_first_label$label &lt;- round(min(map_data_spain$avg_age_15, na.rm = T), 2)
+  new_first_label$x &lt;- unit(-0.15, units = &quot;cm&quot;)
+  new_first_label$hjust &lt;- 1
+  
+  legend_grobs &lt;- gtable_add_grob(legend_grobs, 
+                                  new_first_label, 
+                                  t = 6, 
+                                  l = 2, 
+                                  name = &quot;label-5-0&quot;, 
+                                  clip = &quot;off&quot;)
+  legend$grobs[[1]]$grobs[1][[1]] &lt;- legend_grobs
+  p_grob$grobs[p_grob$layout$name == &quot;guide-box&quot;][[1]] &lt;- legend
+  
+  # the plot is now drawn using this grid function
+  grid.newpage()
+  grid.draw(p_grob)
+}
+
+p &lt;- ggplot() +
+  geom_polygon(data = map_data_spain, aes(fill = brks, 
+                                         x = long, 
+                                         y = lat, 
+                                         group = group)) +
+  # municipality outline
+  geom_path(data = map_data_spain, aes(x = long, 
+                                      y = lat, 
+                                      group = group), 
+            color = &quot;white&quot;, size = 0.1) +
+  coord_equal() +
+  theme_map() +
+  theme(
+    legend.position = c(0.7, 0.03),
+    legend.text.align = 0,
+    legend.background = element_rect(fill = alpha('white', 0.0)),
+    legend.text = element_text(size = 14, hjust = 0, color = &quot;# 4e4d47&quot;),
+    legend.title = element_text(size = 20),
+    plot.title = element_text(size = 28, hjust = 0.8, color = &quot;# 4e4d47&quot;),
+    plot.subtitle = element_text(size = 20, hjust = 0.8, face = &quot;italic&quot;, color = &quot;# 4e4d47&quot;),
+    plot.caption = element_text(size = 14, hjust = 0.95, color = &quot;# 4e4d47&quot;),
+    plot.margin = unit(c(.5,.5,.2,.5), &quot;cm&quot;),
+    panel.border = element_blank()
+  ) +
+  labs(x = NULL, 
+       y = NULL, 
+       title = &quot;Spain's regional demographics&quot;, 
+       subtitle = &quot;Average age in Spanish municipalities, 2011&quot;, 
+       caption = &quot;Author: Manuel Garrido (@manugarri) Original Idea: Timo Grossenbacher (@grssnbchr), Geometries: ArcGis Data: INE, 2011;&quot;) + 
+  scale_fill_manual(
+    values = rev(magma(8, alpha = 0.8)[2:7]),
+    breaks = rev(brks_scale),
+    name = &quot;Average age&quot;,
+    drop = FALSE,
+    labels = labels_scale,
+    guide = guide_legend(
+      direction = &quot;horizontal&quot;,
+      keyheight = unit(2, units = &quot;mm&quot;),
+      keywidth = unit(70/length(labels), units = &quot;mm&quot;),
+      title.position = 'top',
+      title.hjust = 0.5,
+      label.hjust = 1,
+      nrow = 1,
+      byrow = T,
+      reverse = T,
+      label.position = &quot;bottom&quot;
+    )
+  )
+extendLegendWithExtremes(p)
+</code></pre>
+
+<p>The code above is carefully designed to export the map as an image with a witdh of 2400 px.</p>
+
+<p>Because Spain&rsquo;s Canary Islands are so far from the main Spanish Peninsula, a common practice in Spanish map making is to &ldquo;move&rdquo; the Canary Islands closer to mainland Spain. I did this in Gimp.</p>
+
+<h4 id="notes">Notes.</h4>
+
+<ul>
+<li><p>I knew that Spain had a population problem, but damn!. The north west of the country looks like a big retirement home. The original Switzerland map had scale breaks at the 40-52 age range, but I had to expand it to 40-56- because of Spain&rsquo;s aging population.</p></li>
+
+<li><p>Once again, I realize how sad the state of Open Data is in Spain.</p></li>
+</ul>
+
+<p>First, the Spanish National Statistic&rsquo;s data retrieval tool looks like something from the 90s (both in useability and performance).</p>
+
+<p>Second, the Spanish Population Census information is updated every 10 years. That means that the map is showing the most recent official data regarding Spain&rsquo;s population - at it is from 2011! This data should be updated more frequently.</p>
+
+<pre><code>Third, if you go to the original map creator's site, you will see that his map has a beatiful topological layer on top of the municipalities. He uses a 1:1,000,000 scale raster file with topographic information provided by the Swiss Federal Office of Topography.
+
+I spent one day looking for something similar for Spain. It turns out that the Spanish Geographic Information Center only provides [raster topological maps in 25 meters and 50 meters](http://centrodedescargas.cnig.es/CentroDescargas/buscadorCatalogo.do) resolution, which means downloading hundreds of files and joining them. I didn't really want to do that just to play with some code.
+
+In the end, I made my own shaded relief raster from tiles taken from this super cool site, and a lot of Gimp processing. I did not include it in the map because that would mean removing municipalities (as Spain isn't as mountainous as Switzerland).
+</code></pre>
+
+<ul>
+<li>
+Even though the amount of effort poured into this map is impressive (one of the reasons I wanted to replicate it), I think that there should be another way of doing style customization in ggplot. The current code only works with a specific resolution in mind, and it requires a lot of trial and error until you find the right font sizes, alignments and such. Maybe using more relative terms, (<code>em</code>s for example) would make creating beautiful plots much easier.</li>
+</ul>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

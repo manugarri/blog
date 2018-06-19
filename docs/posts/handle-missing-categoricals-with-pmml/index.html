@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Handle missing categoricals with PMML | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">June 15, 2017</h2>
+    <h1 class="title">Handle missing categoricals with PMML</h1>
+    
+    <div class="content">
+      
+
+<p>PMML, a markup language developed by the <a href="http://dmg.org/pmml/v4-3/GeneralStructure.html" target="_blank">Data Mining Group</a> is, in my opinion, a well needed standard in the Data Science ecosystem. PMML is basically an xml format to define Machine learning pipelines, which allows for (sort of) interoperability between different ML Platforms.</p>
+
+<p>In particular, I have been working lately with <a href="https://github.com/openscoring/openscoring" target="_blank">Openscoring</a>, a wonderful software that creates a web server with an easy to use REST api to deploy models and evaluate data with them. (While I am here, kudos to <a href="https://github.com/vruusmann" target="_blank">Villu Ruusmann</a> to singlehandedly spearhead the Machine Learning standardization movement. In my opinion, Openscoring fullfills a hole that is severely underserved, the low latency, real time edge prediction. It can deploy Scikit Learn, Spark , KNIME models and evaluate them with nearly submillisecond latency. As good as Openscoring is, I have been struggling with using openscoring to fit our needs at <a href="http://tribeclick.com/" target="_blank">Tribe</a> (Java is not a language I particulary know/like).</p>
+
+<p>The thing is, pmml is not an easy markup language (<a href="http://dmg.org/pmml/pmml_examples/KNIME_PMML_4.1_Examples/ensemble_audit_dectree.xml" target="_blank">here</a> is a simple example). How could it be? There are tens of different ML algorithms and preprocessors built in many different platforms, and developing a common language among them is not an easy task.</p>
+
+<p>Here is an issue that, as common as it seems, I had trouble finding a solution to, and I hope that this article can help someone in the future.</p>
+
+<h4 id="how-can-you-handle-categorical-variables-when-you-dont-know-all-the-possible-valid-values">How can you handle categorical variables when you dont know all the possible valid values?</h4>
+
+<p>For example, let&rsquo;s say you are analizing Web requests and using the http request browser version name as a feature for modelling. Over time, new web browsers will pop up all the time. If your model does not know how to handle those new values, it can go bad.</p>
+
+<p>Some PMML implementations provide this  this functionality (<a href="http://www.predictive-analytics.info/2016/06/adding-arbitary-attributes-to-pmml.html" target="_blank">here is an example using R&rsquo;s pmml package</a>). However, Spark support in handling missing values is unfortunately that great.</p>
+
+<p>Given how PMML models are basically xml, we can modify them as long as we follow DMG&rsquo;s pmml structure. And the trick is on <a href="http://dmg.org/pmml/v4-3/MiningSchema.html" target="_blank">PMML&rsquo;s mining schema</a>. Basically, to any <code>MiningField</code> (which is PMML&rsquo;s way of saying &ldquo;field to use for evaluation&rdquo;), we can add the attributes <code>missingValueReplacement</code> and <code>invalidValueTreatment</code>. For example, we can have a field like:</p>
+
+<pre><code>&lt;MiningField name=&quot;browser&quot; missingValueReplacement=&quot;NULL&quot; missingValueTreatment=&quot;asMissing&quot;/&gt;
+</code></pre>
+
+<p>This basically tells any PMML evaluator to replace any value that either is invalid (for example, a float), or does not exist in the field definition, with the value &ldquo;NULL&rdquo;.</p>
+
+<p>For this to work, at training time, you have to make sure that any categorical field (basically, strings), at least have one case with the default null value <code>NULL</code> on it. One way of ensuring the default null value appears on every field is adding an extra data point to your training data with all fields as <code>NULL</code>.</p>
+
+<p>After training your model/s and exporting to pmml, the only thing missing is to modify that xml and add the missing data attributes I explained above.</p>
+
+<p>Here is a simple implementation to read a <em>raw</em> pmml model , add the missing value replacements and redeploy. Here is a snippet.</p>
+
+<pre><code class="language-prettyprint">import xml.etree.ElementTree as ET
+from xml.sax.saxutils import unescape
+
+# Load the original pmml model
+with open(&quot;raw_model.xml&quot;) as fname:
+    xml_model = ET.fromstring(fname.read())
+    
+    # Here is where we edit the MiningFields and add the desired attributes
+    for field in self.model.findall(&quot;.//{{{ns}}}MiningField&quot;.format(ns=self.ns)):
+    if self.fields[field.attrib[&quot;name&quot;]] == &quot;string&quot;:
+        field.set(&quot;invalidValueTreatment&quot;,&quot;asMissing&quot;)
+        field.set(&quot;missingValueReplacement&quot;, &quot;NULL&quot;)
+
+# we export the modified model
+with open(&quot;processed_model.xml&quot;, &quot;w&quot;) as fname:
+    # Please someone fix the stdlib xml library so I don't have to do this
+    model_string = unescape(ET.tostring(self.model, encoding='utf8', method='xml').decode())
+    fname.write(model_string)
+</code></pre>
+
+<p>Hope that helps, thanks for reading!</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

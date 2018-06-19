@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Sentiment analysis in Spanish | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">November 12, 2015</h2>
+    <h1 class="title">Sentiment analysis in Spanish</h1>
+    
+    <div class="content">
+      
+
+<p><strong>Note: (This is a continuation of <a href="http://blog.manugarri.com/plotting-100k-tweets-from-my-home-town/" target="_blank">a previous article</a> in which I explained how to download and plot a heatmap of thousand of tweets sent from my hometown.)</strong></p>
+
+<p>You can find the code I used for this tutorial in <a href="https://github.com/manugarri/tweets_map" target="_blank">github</a>. I also uploaded the tweets file so you can follow along without having to download the tweets by yourself.
+On this post, I will focus on how to perform Sentiment Analysis on a Spanish corpus.</p>
+
+<p>In terms of SA, currently is very easy to apply it on English corpus. The [TextBlob]() package comes with a pretrained model, as well as [word2vec]().</p>
+
+<p>However, as far as I can tell, there are no pretrained models in Spanish.</p>
+
+<p>So I decided to build the model by myself.</p>
+
+<p>In order to do so, I needed a labeled dataset. I used the <a href="http://www.sngularmeaning.team/TASS2015/tass2015.php# corpus" target="_blank">TASS</a> DATASET.</p>
+
+<p>TASS is a Sentiment Analysis in Spanish Workshop hosted by the <a href="http://www.sepln.org/?lang=en" target="_blank">Spanish Society for Natural Language Processing (SEPLN)</a> every year. To use it you have to request permission (send an email to ), hence I can&rsquo;t share the corpus here. Reach out to them if you are interested, I&rsquo;m sure they will help you out.</p>
+
+<p>They have multiple XML files containing thousands of tweets in spanish with their associated polarity. Some of the files are focused on a specific topic, such as Politics or TV.</p>
+
+<p>The structure of one of the files looks like:</p>
+
+<pre><code class="language-prettyprint">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;tweets&gt;
+ &lt;tweet&gt;
+  &lt;tweetid&gt;142378325086715906&lt;/tweetid&gt;
+  &lt;user&gt;jesusmarana&lt;/user&gt;
+  &lt;content&gt;&lt;![CDATA[Portada 'Público', viernes. Fabra al banquillo por 'orden' del Supremo; Wikileaks 'retrata' a 160 empresas espías. http://t.co/YtpRU0fd]]&gt;&lt;/content&gt;
+  &lt;date&gt;2011-12-02T00:03:32&lt;/date&gt;
+  &lt;lang&gt;es&lt;/lang&gt;
+  &lt;sentiments&gt;
+   &lt;polarity&gt;&lt;value&gt;N&lt;/value&gt;&lt;/polarity&gt;
+  &lt;/sentiments&gt;
+  &lt;topics&gt;
+   &lt;topic&gt;política&lt;/topic&gt;
+  &lt;/topics&gt;
+ &lt;/tweet&gt;
+ &lt;tweet&gt;
+</code></pre>
+
+<p>So we are mostly interested on the <code>content</code> field and the <code>sentiment.polarity.value</code>.
+Be aware that the schema varies depending on which year&rsquo;s dataset you are reading.</p>
+
+<p>After parsing and joining all available datasets, that left me with a dataset containing over 48,000 tweets with an associated sentiment. Sentiment is encoded as an ordinal variable containing one of the following: <code>N+</code> (very negative), <code>N</code> (negative), <code>NEU</code> (Neutral), <code>P</code> (Positive), <code>P+</code> (very positive).</p>
+
+<p>The goal is to predict the polarity of the <a href="http://blog.manugarri.com/plotting-100k-tweets-from-my-home-town/" target="_blank">tweet file we processed on the previous blog post</a> by using our labeled dataset.</p>
+
+<p>However, before doing that, there is another step we have to take.</p>
+
+<p>If we start browsing downloaded tweets, we will notice that something is wrong. We cannot use the TASS corpus to predict sentiment on <strong>tweets that are not in spanish</strong>.</p>
+
+<p>Which means we have to perform <strong>language detection</strong> on the tweets.</p>
+
+<h3 id="language-detection">Language detection</h3>
+
+<p>To do so, I used 2 different libraries <a href="https://pypi.python.org/pypi/langdetect/1.0.1" target="_blank">langdetect</a> and <a href="http://github.com/saffsd/langid.py" target="_blank">langid</a>, and kept only those tweets which both libraries classified as being written in Spanish.</p>
+
+<pre><code class="language-prettyprint">
+import langid
+from langdetect import detect
+import textblob
+
+def langid_safe(tweet):
+    try:
+        return langid.classify(tweet)[0]
+    except Exception as e:
+        pass
+        
+def langdetect_safe(tweet):
+    try:
+        return detect(tweet)
+    except Exception as e:
+        pass
+
+def textblob_safe(tweet):
+    try:
+        return textblob.TextBlob(tweet).detect_language()
+    except Exception as e:
+        pass   
+        
+# This will take a looong time
+tweets['lang_langid'] = tweets.tweet.apply(langid_safe)
+tweets['lang_langdetect'] = tweets.tweet.apply(langdetect_safe)
+tweets['lang_textblob'] = tweets.tweet.apply(textblob_safe)
+
+tweets.to_csv('tweets_parsed2.csv', encoding='utf-8')
+
+tweets = tweets.query(&quot;lang_langdetect == 'es' or lang_langid == 'es' or lang_langtextblob=='es' &quot;)
+</code></pre>
+
+<p>That left me with 48,606 tweets geocoded and written in Spanish ready to be analyzed.</p>
+
+<p>Like I said above, the data set contains &lsquo;levels&rsquo; of sentiment, not only positive/negative. However, since some of the files from older TASS only have Positive or Negative, I binarized the sentiment. So instead of having a 5-class classification problem we turn it into a binary one <em>(Positive=1, Negative=0)</em>.</p>
+
+<h4 id="text-processing">Text processing</h4>
+
+<p>To be able to manage the tweets, we need to extract information from the text. To do so, we will use scikit learn&rsquo;s <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html" target="_blank">CountVectorizer</a>.</p>
+
+<p>It will turn text into a matrix of token counts, (token being the text&rsquo;s words).</p>
+
+<p>So for example, if we have a tweet like:</p>
+
+<p><code>Machine Learning is very cool</code></p>
+
+<p><code>CountVectorizer</code> will turn it into:</p>
+
+<table border="1" style="text-align: center; width:100%;">  <thead>    <tr >      <th></th>      <th>tweet</th>      <th>machine</th>      <th>learning</th>      <th>is</th>      <th>very</th>      <th>cool</th>    </tr>  </thead>  <tbody>    <tr>      <th>0</th>      <td>Machine Learning is very cool</td>      <td>1</td>      <td>1</td>      <td>1</td>      <td>1</td>      <td>1</td>    </tr>    <tr>      <th>1</th>      <td>Machine Learning is cool</td>      <td>1</td>      <td>1</td>      <td>1</td>      <td>0</td>      <td>1</td>    </tr>  </tbody></table>
+
+<p><br>
+This way we wan work with those vectors instead of with raw text.</p>
+
+<p>We  will do some processing to the text as well, namely:</p>
+
+<ol>
+<li>Tokenize. This means applying a function that splits a text into a list of words. We will use a custom tokenizer that not only tokenizes (using <code>nltk.word_tokenize</code>), but removes puntiation. In this case it is important to include <code>¿</code> and <code>¡</code> (spanish exclamation points).</li>
+<li>Turn all words to lowercase</li>
+<li>Remove stopwords. Stopwords are that set of common words that have little semantical meaning. Examples of stopwords in english would be <em>of, in, or, at &hellip;</em></li>
+<li>Stem the words. This means that for each word, we just keep the stem) of the word. For example, <em>beautiful, beautifully</em> and <em>beauty</em> would be turn into their stem, <em>beauti</em>.</li>
+</ol>
+
+<p>Here is the code to process the text.</p>
+
+<pre><code class="language-prettyprint"># You have to download the spanish stopwords first with nltk.download()
+import nltk
+from nltk.corpus import stopwords
+from nltk import word_tokenize
+from nltk.data import load
+from nltk.stem import SnowballStemmer
+from string import punctuation
+from sklearn.feature_extraction.text import CountVectorizer       
+
+
+# stopword list to use
+spanish_stopwords = stopwords.words('spanish')
+
+# spanish stemmer
+stemmer = SnowballStemmer('spanish')
+
+# punctuation to remove
+non_words = list(punctuation)
+# we add spanish punctuation
+non_words.extend(['¿', '¡'])
+non_words.extend(map(str,range(10)))
+
+stemmer = SnowballStemmer('spanish')
+def stem_tokens(tokens, stemmer):
+    stemmed = []
+    for item in tokens:
+        stemmed.append(stemmer.stem(item))
+    return stemmed
+
+def tokenize(text):
+    # remove punctuation
+    text = ''.join([c for c in text if c not in non_words])
+    # tokenize
+    tokens =  word_tokenize(text)
+
+    # stem
+    try:
+        stems = stem_tokens(tokens, stemmer)
+    except Exception as e:
+        print(e)
+        print(text)
+        stems = ['']
+    return stems
+    
+vectorizer = CountVectorizer(
+                analyzer = 'word',
+                tokenizer = tokenize,
+                lowercase = True,
+                stop_words = spanish_stopwords)
+</code></pre>
+
+<h3 id="model-evaluation">Model Evaluation</h3>
+
+<p>On this step we try multiple Machine Learning Classifiers and measure their performance. Tools like <a href="https://github.com/EducationalTestingService/skll" target="_blank">SciKit-Learn Laboratory (SKLL)</a> can help accelerate this step.</p>
+
+<p>One thing we have to consider is the measure that we will use to determine wether a model is better than other. In binary classification problems a good metrics is the Area Under the Curve, which takes into account the True Positive Rate as well as the False Positive Ratean awesome measure that you should totally read about.</p>
+
+<p>In my case I chose a <a href="http://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html" target="_blank">Linear Support Vector Machine Classifier</a>, since I have found it performs pretty well in this kind of problems.</p>
+
+<p>Once we have our Vectorizer and Classifier, its a matter of fine tuning their hyperparameters to find those that perform best.</p>
+
+<p>To do so, we go ahead and perform a grid search using scikit-learn <a href="http://scikit-learn.org/stable/modules/generated/sklearn.grid_search.GridSearchCV.html" target="_blank">GridSearchCV</a>.</p>
+
+<p>This method perform an exaustive search of the parameters specified and return a model with the best performan parameters.</p>
+
+<p>This is the code that performs the search:</p>
+
+<pre><code class="language-prettyprint">
+vectorizer = CountVectorizer(
+                analyzer = 'word',
+                tokenizer = tokenize,
+                lowercase = True,
+                stop_words = spanish_stopwords)
+
+pipeline = Pipeline([
+    ('vect', vectorizer),
+    ('cls', LinearSVC()),
+])
+
+
+# here we define the parameter space to iterate through
+parameters = {
+    'vect__max_df': (0.5, 1.9),
+    'vect__min_df': (10, 20,50),
+    'vect__max_features': (500, 1000),
+    'vect__ngram_range': ((1, 1), (1, 2)),  # unigrams or bigrams
+    'cls__C': (0.2, 0.5, 0.7),
+    'cls__loss': ('hinge', 'squared_hinge'),
+    'cls__max_iter': (500, 1000)
+}
+
+
+grid_search = GridSearchCV(pipeline, parameters, n_jobs=-1 , scoring='roc_auc')
+grid_search.fit(tweets_corpus.content, tweets_corpus.polarity_bin)
+</code></pre>
+
+<p>You can see that we can not only find parameters for the LinearSVC Classifier, but also for the Vectorizer itself.</p>
+
+<p>This step will take some time. After it&rsquo;s done, it will return the set of parameters that return the highest AUC score. In this case, the highest AUC was 0.92. Which it is ok.</p>
+
+<p>After that, we just need to train the model on the TASS corpus, load our tweets and predict the sentiment.</p>
+
+<p>After that, we save the tweets latitude, longitude and polarity to a file and plot the heatmap following a similar method than what I explained on the previous post.</p>
+
+<p>You could do that by using the <code>grid_search</code> object you used for the parameter search.
+In my case, my laptop ran out of battery before I saved the model so I just recreated it by building a pipeline with the vectorizer and the LinearSVC tuned with the best params provided by the grid search.</p>
+
+<pre><code class="language-prettyprint">from sklearn.svm import LinearSVC
+from sklearn.pipeline import Pipeline
+
+# we build a Pipeline object
+pipeline = Pipeline([
+    ('vect', CountVectorizer(
+            analyzer = 'word',
+            tokenizer = tokenize,
+            lowercase = True,
+            stop_words = spanish_stopwords,
+            min_df = 50,
+            max_df = 1.9,
+            ngram_range=(1, 1),
+            max_features=1000
+            )),
+    ('cls', LinearSVC(C=.2, loss='squared_hinge',max_iter=1000,multi_class='ovr',
+             random_state=None,
+             penalty='l2',
+             tol=0.0001
+             )),
+])
+
+# we fit the pipeline with the TASS corpus
+pipeline.fit(tweets_corpus.content, tweets_corpus.polarity_bin)
+# now we predict on the new tweets dataset
+tweets['polarity'] = pipeline.predict(tweets.tweet)
+</code></pre>
+
+<p>Once we have the tweets with their polarity, we follow similar steps than we did on the <a href="http://blog.manugarri.com/plotting-100k-tweets-from-my-home-town/" target="_blank">previous twitter heatmap tutorial</a> and we get the following heatmap of positive and negative places in Murcia (the image is pretty big, you might want to zoom in):</p>
+
+<p><img src="https://cdn.rawgit.com/manugarri/tweets_map/master/murcia_tweets_polarity.png" alt="murcia sentiment heatmap" /></p>
+
+<p>Neat, isn&rsquo;t it?</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

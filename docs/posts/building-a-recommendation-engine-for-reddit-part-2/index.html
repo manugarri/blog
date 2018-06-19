@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Building a Recommendation Engine for Reddit. Part 2 | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">November 12, 2014</h2>
+    <h1 class="title">Building a Recommendation Engine for Reddit. Part 2</h1>
+    
+    <div class="content">
+      
+
+<h4 id="step-2-building-the-dataset">Step 2. Building the dataset</h4>
+
+<p>On <a href="http://blog.manugarri.com/building-a-recommendation-engine-for-reddit-part-1/" target="_blank">part 1</a> of this tutorial we laid out the project in detail, and decided that in order to calculate the similarity between two subs, we just need to find the list of users on each one.</p>
+
+<p>However, this methodology becomes a computational problem when you consider the magnitud of Reddit. Reddit has more than 300,000 subreddits, and more than 100 Million users (<em><a href="http://techcrunch.com/2013/07/03/pew-reddit-used-by-6-of-u-s-online-adults-putting-it-on-par-with-tumblr-but-far-behind-facebook/" target="_blank">6% of the US population</a></em>), so we need to narrow a little bit the data that we need.</p>
+
+<p>A way to narrow it down would be to choose to analyze only the subreddits that are big enough. Following the <a href="http://en.wikipedia.org/wiki/Long_tail" target="_blank">long tail principle</a>, there are many subreddits with just a couple of redditors, and we are not interested in them (not yet at least).</p>
+
+<p>To do so, I built a list of all subreddits in reddit and their subscriber count. Here is the Python scripts I used.</p>
+
+<p><em>Note: For this project, I used some web scraping methods that are not friendly to the target sites. These scripts ask for a lot of information to the servers that host that site. Reddit has an awesome <a href="http://www.reddit.com/dev/api" target="_blank">API</a>, which should be used whenever possible</em></p>
+
+<p><strong>This script gets a list of available subreddits and save them to a json file</strong></p>
+
+<pre><code class="language-prettyprint">'''Gets a list of all subredits'''
+import requests
+import json
+import time
+
+def add_subs(content, count):
+    if content:
+        for sub in content.get('data').get('children'):
+            line = sub.get('data').get('display_name')
+            file.write(line)
+            file.write('\n')
+        block_count = len(content.get('data').get('children'))
+    return block_count
+
+def get_url(url):
+    while 1:
+        try:
+            content = requests.get(url, timeout=5)
+            content = json.loads(content.content)
+            return content
+        except:
+            time.sleep(60)
+
+
+subs = []
+url = 'http://www.reddit.com/reddits.json'
+file = open('subs.txt', 'w')
+content = get_url(url)
+subs = add_subs(content, subs)
+
+base_url = 'http://www.reddit.com/reddits.json?count={0}&amp;after={1}'
+count=0
+while 1:
+    if content:
+        after = content.get('data').get('after')
+        if after:
+            url = base_url.format(count, after)
+            print url
+            content = get_url(url)
+            count += add_subs(content, count)
+    else:
+        break
+file.close()
+with open('subs.json', 'w') as file:
+    json.dump(subs, file)
+    file.close()
+````
+
+Now that we have a list of all subreddits, we need to find the user counts for each one.
+
+I created a postgres database to store all the reddit information, and use the following script to read the subs.json file we just created, and for each sub, find the number of subscribers and write it to a table. I used the awesome [PRAW](https://praw.readthedocs.org/en/v2.1.19/) library to interact with Reddit's api:
+
+```prettyprint lang-python
+import json
+import time
+import psycopg2
+import numpy as np
+
+import praw
+from praw.handlers import MultiprocessHandler
+
+
+DB_NAME=&lt;YOUR_DB_NAME&gt;
+DB_USER=&lt;YOUR_DB_USER&gt;
+DB_HOST=&lt;YOUR_DB_HOST&gt;
+DB_PWD=&lt;YOUR_DB_NPWD&gt;
+
+class Save_to_db():
+    connection = None
+    cursor = None
+
+    def __init__(self, host, dbname, user_name, password):
+        # Connect to an existing database
+        self.connection = psycopg2.connect(dbname=dbname, user=user_name,
+                host=host, password=password)
+        self.cursor = self.connection.cursor()
+
+    def __del__(self):
+        if self.cursor is not None:
+            self.cursor.close();
+
+        if self.connection is not None:
+            self.connection.close();
+
+    def insert(self, table_name, entry_list):
+        if self.cursor is None:
+            raise Exception(&quot;Invalid connection to database.&quot;)
+        # Fill in the new values
+        subquery=( &quot;, &quot;.join( repr(point) for point in entry_list))
+        query = 'INSERT INTO %s VALUES (%s);' % (table_name, subquery)
+        self.cursor.execute(query, subquery)
+        # Write the new info to db
+        self.connection.commit()
+
+    def execute_sql(self, sql_query):
+        if self.cursor is None:
+            raise Exception(&quot;Invalid connection to database.&quot;)
+        self.cursor.execute(sql_query)
+        self.connection.commit()
+
+    def retrieve_sql(self, sql_query):
+        if self.cursor is None:
+            raise Exception(&quot;Invalid connection to database.&quot;)
+        self.cursor.execute(sql_query)
+        return self.cursor.fetchall()
+
+    def create_table(self, table_name, col_dict):
+        if self.cursor is None:
+            raise Exception(&quot;Invalid connection to database.&quot;)
+        string = ''
+        for item in col_dict.items():
+            string = string + item[0] + ' ' + item[1] + ', '
+        string = string[:-2]
+        sql_query = 'CREATE TABLE {0} ({1});'.format(table_name, string)
+        self.cursor.execute(sql_query)
+        self.connection.commit()
+
+handler = MultiprocessHandler()
+r = praw.Reddit(user_agent='Manugarri Reddit Recommendation Engine', handler=handler)
+
+with open('subs.json', 'r') as file:
+    subs = json.load(file)
+    subs = np.array(subs)
+
+# We add this in case our script fails  and we need to start again
+saver = Save_to_db(dbname=DB_NAME, user_name=DB_USER, host=DB_HOST,
+password=DB_PWD)
+existing_subs = np.array(saver.retrieve_sql('SELECT name from subscriber_count;'))
+existing_subs = existing_subs.flatten()
+subs = np.setdiff1d(subs, existing_subs)
+
+print('{0} subs left'.format(len(subs)))
+
+for sub in subs:
+    try:
+        data = r.get_subreddit(sub, fetch=True)
+        subscribers = data.subscribers
+
+        sql_query = '''INSERT INTO subscriber_count
+            (name, subscribers)
+        SELECT '{0}', {1}
+        WHERE
+        NOT EXISTS (
+            SELECT name FROM subscriber_count WHERE name = '{0}'
+        );'''.format(sub, subscribers)
+        saver.execute_sql(sql_query)
+        print sub, ' : ' ,subscribers
+    except Exception as e:
+        print e, sub
+        time.sleep(10)
+
+del saver
+</code></pre>
+
+<p>At this point, we know the subscriber information for all the subreddits.</p>
+
+<p>Lets see how the subreddits distribution looks like:</p>
+
+<p><img src="http://i.imgur.com/I9q7CwY.png" alt="Sub distribution" />
+<em>xkcd style because why not</em></p>
+
+<p>As you can see, the big mayority of subs (around 200,000 subs) have less than 200 subscribers. These are probably subreddits that either are new, or too niche to be relevant for our recommendation engine.</p>
+
+<p>To narrow the dataset down a little, let&rsquo;s focus on the subreddits with 10,000 subscribers or more</p>
+
+<p><img src="http://i.imgur.com/LlkgBai.png" alt="Subscriber count" />
+<em>kudos to yhat for the ggplot port btw</em></p>
+
+<p>That will do. The distribution seems much more distributed.</p>
+
+<p>That leaves us with 1400 Subreddits that will be either stored and recommended to the Recommendation engine users.</p>
+
+<p>So we need to get a list of redditors for each of the Subreddits with 10,000+ subscribers.</p>
+
+<p>The process will look like:</p>
+
+<p><strong>1. First we instantiate the redditors table (we will be using the <code>save_to_db</code> class from the previous block:</strong></p>
+
+<pre><code class="language-prettyprint"># create the table (just once)
+with open('subs_db.json') as file:
+    subs = json.load(file)
+col_dict = OrderedDict()
+col_dict['redditor'] = 'varchar(20)'
+for sub in subs:
+  col_dict[sub] = 'smallint'
+
+saver = Save_to_db(dbname=DB_NAME, user_name=DB_USER, host=DB_HOST,
+password=DB_PWD)
+
+saver.create_table('redditors', col_dict)
+</code></pre>
+
+<p><em>Side Note: One mistake i did is that initially i instantiated the redditors table as a very wide table, with a row per redditor and a column by subreddit. This approach turned out to be very problematic. I will explain later how to deal with it.</em></p>
+
+<p><strong>2. Open the file with the final 1400 subreddits.</strong></p>
+
+<p><strong>3. For each sub:</strong></p>
+
+<p>3b. Get the latest comments on that sub.
+  3c. Get the user that wrote each comment
+  4. Store that user&rsquo;s subreddit on the redditors database.</p>
+
+<p>Here is the code I used <em>(I also used the save_to_db i included before)</em>. To accelerate the process I used the multiprocessing library to spin multiple workers.</p>
+
+<pre><code class="language-prettyprint">from collections import OrderedDict
+import json
+from datetime import datetime
+import multiprocessing
+from random import shuffle
+
+import numpy as np
+import psycopg2
+import praw
+from praw.handlers import MultiprocessHandler
+
+
+def store_redditor(sub, redditor, saver):
+    query = '''
+    DO
+    $BODY$
+    BEGIN
+    IF EXISTS (SELECT &quot;{sub}&quot; from redditors where redditor = '{redditor}' ) THEN
+        UPDATE redditors SET &quot;{sub}&quot; = 1 WHERE redditor = &quot;{redditor}&quot;;
+    ELSE
+        INSERT INTO redditors (redditor, &quot;{sub}&quot;) VALUES ('{redditor}',1);
+    END IF;
+    END;
+    $BODY$
+    '''.format(redditor=redditor, sub=sub)
+    saver.execute_sql(query)
+
+
+def sub_in_db(sub, saver):
+    sub_col = np.array(saver.retrieve_sql('SELECT &quot;{}&quot; from\
+        redditors'.format(sub)))
+    print sub_col
+    if 1 in sub_col:
+        print 'Sub {0} in Database'.format(sub)
+        return True
+    else:
+        print 'Sub {0} NOT in Database'.format(sub)
+        return False
+
+def get_redditors(sub, r):
+    sub_redditors = []
+    sub_info = r.get_subreddit(sub)
+    comments = sub_info.get_new(limit=None)
+    while 1:
+        c = comments.next()
+        time_old = (datetime.now() - datetime.fromtimestamp(c.created))
+        if time_old.total_seconds()/(3600*24) &lt; 180:
+            redditor = c.author.name
+            if redditor not in sub_redditors:
+                store_redditor(sub, redditor, saver)
+                print sub,redditor
+                sub_redditors.append(redditor)
+            else:
+                pass
+        else:
+            break
+
+with open('subs_db.json') as file:
+    subs = json.load(file)
+
+handler = MultiprocessHandler()
+def praw_process(handler):
+    saver = Save_to_db(dbname='reddit', user_name='reddit', host='localhost',
+    password='reddit')
+    r = praw.Reddit(user_agent='Manugarri Recommendation Engine', handler=handler)
+    for sub in subs:
+        if not sub_in_db(sub, saver):
+            get_redditors(sub, r, saver)
+
+if __name__ == '__main__':
+    saver = Save_to_db(dbname=DB_NAME, user_name=DB_USER, host=DB_HOST,
+    password=DB_PWD)
+    jobs = []
+    for i in range(10): # we span 10 workers
+        p = multiprocessing.Process(target=praw_process, args=(handler,))
+        jobs.append(p)
+        p.start()
+</code></pre>
+
+<p><strong>4. Once we have enough redditors, we will directly find those redditors comments and update the subreddits they are commenting on.</strong></p>
+
+<p>Here is the code I used to do so. Very similar than the one before, but now the input is a list of redditors and we parse their profile pages.</p>
+
+<pre><code class="language-prettyprint">def get_comments_subs(username, r):
+    # Get the list of comments by the user
+    comlist = []
+    try:
+        comments = r.get_redditor(username).get_comments(limit=1000)
+        comlist.extend(comments)
+        comlist = list(set([str(i.subreddit) for i in comlist]))
+    except:
+        logging.error('Redditor {} not found'.format(username))
+    return comlist
+
+def get_submissions_subs(username, r):
+    # Get the list of submissions by the user
+    postlist = []
+    try:
+        submissions = r.get_redditor(username).get_submitted(limit=1000)
+        postlist.extend(submissions)
+        postlist = list(set([str(i.subreddit) for i in postlist]))
+    except:
+        logging.error('Redditor {} not found'.format(username))
+    return postlist
+
+def get_redditor_subs_praw(redditor, reddit_session):
+    print redditor
+    subs = []
+    try:
+        subs.extend(get_comments_subs(str(redditor), reddit_session))
+        subs.extend(get_submissions_subs(str(redditor), reddit_session))
+    except:
+        logging.exception('')
+    subs = [sub for sub in subs if sub in SUBS_DB]
+    return subs
+
+def update_redditor(redditor, subs, lock):
+    values = [1 for i in range(len(subs))]
+    insert_dict = OrderedDict(zip(subs, values))
+    insert_dict['redditor'] = &quot;'&quot;+redditor+&quot;'&quot;
+    # worker_saver = Save_to_db(dbname='reddit', user_name='reddit', host='localhost',
+    #               password='reddit')
+    connection = psycopg2.connect(dbname='reddit', user='reddit', host='localhost',
+                   password='reddit', sslmode='require')
+    cursor = connection.cursor()
+    columns = ', '.join(['&quot;'+key+'&quot;' for key in insert_dict.keys()])
+    values = ', '.join([str(value) for value in insert_dict.values()])
+    insert_query = 'insert into {} ({}) values ({});'.format('redditors2', columns, values)
+
+    update_values = ', '.join(['&quot;' + key + '&quot; = '+ str(1) for key in insert_dict])
+    update_query = '''UPDATE redditors2 SET {} WHERE redditor = '{}';'''.format(update_values, redditor)
+
+    query = '''
+    DO
+    $BODY$
+    BEGIN
+    IF EXISTS (SELECT redditor from redditors2 where redditor = '{}' ) THEN
+        {}
+    ELSE
+        {}
+    END IF;
+    END;
+    $BODY$
+    '''.format(redditor, update_query, insert_query)
+    cursor.execute(query)
+    connection.commit()
+    print redditor, len(subs)
+
+def worker_get_redditor_subs(job_id, redditor_list, lock, handler):
+    reddit_session = praw.Reddit(user_agent='Manugarri Recommendation Engine',
+            handler = handler)
+    for redditor in redditor_list:
+        subs = get_redditor_subs_praw(redditor, reddit_session)
+        if len(subs) &gt; 0:
+            update_redditor(redditor, subs, lock)
+
+def dispatch_jobs(data, job_number, function):
+
+    def chunks(l, n):
+        return [l[i:i+n] for i in range(0, len(l), n)]
+
+    total = len(data)
+    chunk_size = total / job_number
+    slice = chunks(data, chunk_size)
+    jobs = []
+    lock = multiprocessing.Lock()
+    handler = MultiprocessHandler()
+    for i, s in enumerate(slice):
+        j = multiprocessing.Process(target=function, args=(i, s, lock, handler))
+        jobs.append(j)
+    for j in jobs:
+        j.start()
+
+if __name__ == '__main__':
+    with open('subs_db.json') as file:
+        SUBS_DB = json.load(file)
+    saver = Save_to_db(dbname=DB_NAME, user_name=DB_USER, host=DB_HOST,
+    password=DB_PWD)
+    
+    # we implement 2 different tables in case the process is interrupted.
+    redditors = set(saver.retrieve_sql('SELECT DISTINCT redditor from\
+        redditors;'))
+    n_workers =20
+    existing_redditors = set(saver.retrieve_sql('SELECT DISTINCT redditor from\
+            redditors2;'))
+    redditors = list(redditors - existing_redditors)
+    redditors.sort()
+    dispatch_jobs(redditors, n_workers, worker_get_redditor_subs)
+</code></pre>
+
+<p>So by now we have a set of subreddits, and a list of redditors with a list of subreddits they have commented on.</p>
+
+<p>Next Step will be about how to compute the similarity. I will explain that on <a href="http://blog.manugarri.com/building-a-recommendation-engine-for-reddit-part-3/" target="_blank">part 3</a>.</p>
+
+<hr />
+
+<p>####### Side note.</p>
+
+<p>At this moment in the project I realized that it would be much easier if , instead of having the redditors table in the following format:</p>
+
+<pre><code> redditor     |  sub1  |   sub2  | --&gt; a column per subreddit
+
+redditor1     |   0    |   0     | --&gt; 1 when the redditor has commented on the sub
+
+redditor2     |   1    |   0     | --&gt; 0 if the redditor has not commented on the sub
+
+...
+</code></pre>
+
+<p>we gave it a longer structure (that means, less columns and more rows)</p>
+
+<pre><code> redditor     |  sub
+
+redditor1     |  sub1
+
+redditor1     |  sub234
+
+redditor2     |  sub456
+
+...
+</code></pre>
+
+<p>So I used the following script to get the table as a csv, change the format, and save it to another csv, which I then imported to the database again:</p>
+
+<pre><code class="language-prettyprint">redditors = open('redditors_wide.csv')
+redditors_long = open('redditors_long.csv', 'w')
+columns = redditors.readline()
+columns = columns.replace('\n','')
+columns = columns.split(',')
+redditors_test.write('redditor,sub\n')
+for line in redditors:
+    line = line.replace('\n','')
+    line = line.split(',')
+    redditor = line[0]
+    indices = [i for i, j in enumerate(line) if j == '1']
+    subs = [columns[i] for i in indices]
+    for sub in subs:
+        redditors_long.write('{},{}\n'.format(redditor,sub))
+redditors_long.close()
+</code></pre>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

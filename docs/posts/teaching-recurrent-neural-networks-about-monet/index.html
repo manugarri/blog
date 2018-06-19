@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Teaching recurrent Neural Networks about Monet | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">August 2, 2015</h2>
+    <h1 class="title">Teaching recurrent Neural Networks about Monet</h1>
+    
+    <div class="content">
+      
+
+<p>Recurrent Neural Networks have boomed in popularity over the past months, thanks to articles like the amazing <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank">The Unreasonable Effectiveness of Recurrent Neural Networks</a> by Andrej Karpathy.</p>
+
+<p>Long story short, Recurrent Neural Networks (RNNs) are a type of NNs that can work over sequences of vectors and where their elements keep track of their state history.</p>
+
+<p>Neural Networks are increasingly easy to use, specially in the Python ecosystem, with libraries like Caffe, Keras or Lasagne making the assembly of neural networks a trivial task.</p>
+
+<p>I was checking the documentation on Keras and found an example to <a href="https://github.com/fchollet/keras/blob/master/examples/lstm_text_generation.py" target="_blank">generate text</a> from Nietzsche readings via a Long Short Term Memory Network (LSTM).</p>
+
+<p>I run the example, and after a couple hours the model started producing pretty convincing, Nietzsche-looking text.</p>
+
+<p><img src="http://i.imgur.com/dg0Jblx.gif" alt="Skynet" />
+<div style="float: right"></div>
+<p style='text-align: center;margin-top: -20px;'><em>Skynet learning about Nietzsche</em></p></p>
+
+<p>So I thought <em>in this example the training set is just an array of lines, each line being an array of characters. Images follow a similar data structure</em></p>
+
+<h3 id="loading-the-dataset">Loading the dataset</h3>
+
+<p>The training dataset consisted of 50 images of Monet Paintings.</p>
+
+<p><img src="https://raw.githubusercontent.com/manugarri/keras_monet/master/input_sample.png" alt="input" />
+<div style="float: right"></div>
+<p style='text-align: center;margin-top: -20px;'><em>Input sample</em></p></p>
+
+<p>I loaded the list of images as an array. Each image is initially a width * height * 3 numpy array , with the 3 being 3 numbers containing the Red, Green and Blue mix of the specific pixel.</p>
+
+<p>To convert the 3 dimensional ararys to one dimensional, i used the following trick.</p>
+
+<p>First, I concatenated all the rows on each image into one single row (appending every row after the first one). Then, i converted the RGB values into hex colors, thus converting a length 3 array (r,g,b) to a string (# FFF).</p>
+
+<p>However, the network works only with numerical values, so I took all the colors, put them in a list and then replace every hex color with its position in the list.</p>
+
+<p>So for example, if the color list looks like <code>[# 000, # 001, # 211, ...,# FFF]</code>, then a pixel with the rgb values <code>(0,0,0)</code> would be converted to the hexcode <code># 000</code>, and since that is the first element on the color list, it would be replaced by the array <code>[1, 0, 0, ....0]</code></p>
+
+<p>One issue I found is that, since there were many colors in total, the individual pixel arrays were too big and wouldn&rsquo;t fit in memory. I fixed this by using <a href="http://glowingpython.blogspot.com/2012/07/color-quantization.html" target="_blank">color quantization</a>. Think of color quantization as a clustering problem that can be solved using K-Means, for example.</p>
+
+<p>Here is the code that loads the images:</p>
+
+<pre><code class="language-prettyprint">def rgb_to_hex(array):
+    array = map(lambda x: int(x * 255), array)
+    return '{:02x}{:02x}{:02x}'.format(*array)
+
+input_folder = 'monet'
+image_width = image_height = 75
+input_layer_size = image_width * image_height
+input_images = os.listdir(input_folder)
+n_samples = len(input_images)
+n_colors = 1000 # for color quantization
+
+text = np.empty((0,0))
+text = []
+
+print('Reading and Quantizing input images')
+for input_image in input_images:
+    print('loading image {}'.format(input_image))
+    image_data = scipy.misc.imread(os.path.join(input_folder,input_image))
+    image_data = scipy.misc.imresize(image_data, (image_height, image_width))
+    image_data = image_data.reshape(input_layer_size,3)
+    text.append(image_data)
+text = np.array(text)
+text = quantize(text, n_colors)
+import pdb;pdb.set_trace()
+text = np.apply_along_axis(rgb_to_hex, 2, text)
+text = text.reshape(n_samples*input_layer_size)
+
+chars = np.unique(text)
+print('total chars:', len(chars))
+char_indices = dict((c, i) for i, c in enumerate(chars))
+indices_char = dict((i, c) for i, c in enumerate(chars))
+</code></pre>
+
+<h3 id="network-setup">Network setup</h3>
+
+<p>In terms of the Network, i decided to test my theory of the similarities between text and images, and used the same exact implementation that the text example had.</p>
+
+<p>2 stacked LSTM layers with dropout to avoid overfitting and an output layer with softmax activation, and RMSProp as the learning optimizer.</p>
+
+<pre><code class="language-prettyprint">model = Sequential()
+model.add(LSTM(len(chars), 512, return_sequences=True))
+model.add(Dropout(0.2))
+model.add(LSTM(512, 512, return_sequences=False))
+model.add(Dropout(0.2))
+model.add(Dense(512, len(chars)))
+model.add(Activation('softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+</code></pre>
+
+<h3 id="results">Results</h3>
+
+<p>LSTM Networks are very interesting, they seem to pick up structures in the data as they learn, with the length of those structures increasing after every iteration.</p>
+
+<h5 id="iterations-1-10">Iterations 1-10</h5>
+
+<p><img src="https://raw.githubusercontent.com/manugarri/keras_monet/master/output_1_10.png" alt="1_10" />
+Random noise, since the model hasnt pick up any boundaries of hte data yet.</p>
+
+<h5 id="iterations-20-30">Iterations 20-30</h5>
+
+<p><img src="https://raw.githubusercontent.com/manugarri/keras_monet/master/output_20_30.png" alt="20-30" /></p>
+
+<p>By iteration # 20, the model its starting to aggregate colors together. However, it hasnt figured out properly the boundaries of these color sets.</p>
+
+<h5 id="iterations-50-60">Iterations 50-60</h5>
+
+<p><img src="https://raw.githubusercontent.com/manugarri/keras_monet/master/output_50_60.png" alt="getting there" /></p>
+
+<p>At this point the network has pretty much figured out which colors fit well with other colors. It made snowy like paintings, as well as green-nature ones.</p>
+
+<h5 id="iterations-80-100">Iterations 80-100</h5>
+
+<p><img src="https://raw.githubusercontent.com/manugarri/keras_monet/master/output_80_100.png" alt="boom!" /></p>
+
+<p>Now we are talking! The output was so impressive that i thought the model was overfitting, but the outputs look <em>similar</em> to the input, but not that similar.</p>
+
+<p>The network has gone far enough on the sequences of pixels to understand not only sets of colors that are together, but also the shapes that those sets normally have. The output by iteration # 80 is pretty similar in style to Monet paintings.</p>
+
+<p>In conclusion, Recurrent neural networks, given time and a specific input, can generate all kinds of surprising findings.</p>
+
+<p><img src="https://raw.githubusercontent.com/manugarri/keras_monet/master/output_sample.png" alt="" />
+<div style="float: right"></div>
+<p style='text-align: center;margin-top: -20px;'><em>Output evolution</em></p></p>
+
+<p>Wanna try this at home? You can check it out on <a href="https://github.com/manugarri/keras_monet" target="_blank">github</a>. You will have to install Keras, and i would recommend installing Cuda since this process might be too much for your CPU to handle. <em>(If you are an ubuntu user, you might wanna check <a href="http://www.johnwittenauer.net/configuring-theano-for-high-performance-deep-learning/" target="_blank">this article</a> out)</em></p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

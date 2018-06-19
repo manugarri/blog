@@ -20,5 +20,537 @@
       <description>Hey</description>
     </item>
     
+    <item>
+      <title>Note to self. Pyspark failling with &#39;Error while instantiating &#39;org.apache.spark.sql.hive.HiveSessionState&#39;</title>
+      <link>https://manugarri.github.io/blog/posts/note-to-self-pyspark-failling-with-error-while-instantiating-org-apache-spark-sql-hive-hivesessionstate/</link>
+      <pubDate>Tue, 22 May 2018 10:12:48 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/note-to-self-pyspark-failling-with-error-while-instantiating-org-apache-spark-sql-hive-hivesessionstate/</guid>
+      <description>If you run pyspark and see this error (it happens in scala-shell as well):
+Error while instantiating ‘org.apache.spark.sql.hive.HiveSessionState’  The solution is easy, yet ridiculous. 1. Create the folder /tmp/hive 2. Give it chmod permissions sudo chmod -R 777 /tmp/hive
+Found here</description>
+    </item>
+    
+    <item>
+      <title>Note to self: Fixing encoding in Golang ascii85</title>
+      <link>https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/</link>
+      <pubDate>Thu, 19 Apr 2018 08:36:22 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/</guid>
+      <description>Yesterday I spent a few hours dealing with what I like to call &amp;ldquo;the edges of StackOverflow&amp;rdquo;. By that I mean those situations in which you are trying to solve a programming problem (mostly a bug) and you have no idea why its happening, and even worse, no amount of search (in StackOverflow or Github) yield any information that might seem somewhat related to the issue.
+I think this xkcd strip puts it quite clearly:</description>
+    </item>
+    
+    <item>
+      <title>Note to self:Print statements not showing up on systemd logs? Do this</title>
+      <link>https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/</link>
+      <pubDate>Wed, 31 Jan 2018 14:24:33 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/</guid>
+      <description>Let&amp;rsquo;s assume we have a service set up as follows:
+[Unit] Description=systemd_microservice [Service] User=USER Group=GROUP WorkingDirectory=systemd_working_directory ExecStart=/usr/bin/python python_scripts.py SuccessExitStatus=143 TimeoutStopSec=10 Restart=on-failure RestartSec=10 [Install] WantedBy=multi-user.target  And inside python_script.py you have a bunch of print statements.
+You set up your service and your surprise when you do
+sudo journalctl -f -u python_service.service
+The logs dont show up!
+The reason is python stdout is being buffered when redirected to journal, and thus it only shows up in blocks</description>
+    </item>
+    
+    <item>
+      <title>Note to self: Disable caps lock in Ubuntu 16.04</title>
+      <link>https://manugarri.github.io/blog/posts/note-to-self-disable-caps-lock-in-ubuntu-16-04/</link>
+      <pubDate>Wed, 25 Oct 2017 09:08:11 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/note-to-self-disable-caps-lock-in-ubuntu-16-04/</guid>
+      <description>Sources: here and here
+This post shows how to disable the caps lock key and enables it only by pressing both shift keys together.
+1. Install DCONF $ sudo apt-get install dconf-tools
+2. Disable caps lock and reenable it as pressing both shift keys at once: $ setxkbmap -option &amp;quot;caps:none&amp;quot; $ setxkbmap -option &amp;quot;shift:both_capslock&amp;quot;</description>
+    </item>
+    
+    <item>
+      <title>What is it to work in a Startup - the good and bad</title>
+      <link>https://manugarri.github.io/blog/posts/what-is-it-to-work-in-a-startup-the-good-and-bad/</link>
+      <pubDate>Wed, 25 Oct 2017 09:05:16 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-is-it-to-work-in-a-startup-the-good-and-bad/</guid>
+      <description>Nowadays, everyone seems to be fascinated about startups. Media bombard us with success story after success story, displaying incredible offices featuring slides instead of stairs and in house chefs preparing home made dinners.
+I started working in November 2013 in a NYC based Startup named Namely. I was the 18th employee joining the company. As of now, 4 years later, Namely has more than 300 employees.
+Back when I joined, we had two offices.</description>
+    </item>
+    
+    <item>
+      <title>TIL About BFG Repo-cleaner</title>
+      <link>https://manugarri.github.io/blog/posts/til-about-bfg-repo-cleaner/</link>
+      <pubDate>Mon, 23 Oct 2017 08:24:08 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/til-about-bfg-repo-cleaner/</guid>
+      <description>If you ever migrate code from Bitbucket to Github, you will unpleasantly discover that GH does not allow by default fiels larger than 100MB (unless you pay extra for Large File Storage). At that point, you will probably realize that Github isn&amp;rsquo;t really the right place to store such large files, and that you are better off moving the data to S3 or somewhere else.
+However, you quickly realize that, even if you git remove the large file, you are unable to push the repo to Github anyways, as the file does not only exist on the current commit, but in all the history.</description>
+    </item>
+    
+    <item>
+      <title>Video: Usos del Machine Learning aplicados al E-commerce</title>
+      <link>https://manugarri.github.io/blog/posts/video-usos-del-machine-learning-aplicados-al-e-commerce/</link>
+      <pubDate>Tue, 26 Sep 2017 12:14:32 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/video-usos-del-machine-learning-aplicados-al-e-commerce/</guid>
+      <description>Aquí dejo el video de mi charla &amp;ldquo;Usos del Machine Learning aplicados al E-commerce&amp;rdquo; que tuvo lugar en la ENAE Business School como parte del Foro &amp;ldquo;Ecommerce &amp;amp; Big/Small Data&amp;rdquo;.
+En esta charla explico varios algoritmos que se usan hoy en día en Ecommerce así como las librerías que existen para implementarlos.
+ La calidad del video en Youtube no es muy buena, si quereis el video en HD la única forma es a traves del reproductor de la Universidad de Murcia</description>
+    </item>
+    
+    <item>
+      <title>Handle missing categoricals with PMML</title>
+      <link>https://manugarri.github.io/blog/posts/handle-missing-categoricals-with-pmml/</link>
+      <pubDate>Thu, 15 Jun 2017 23:17:21 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/handle-missing-categoricals-with-pmml/</guid>
+      <description>PMML, a markup language developed by the Data Mining Group is, in my opinion, a well needed standard in the Data Science ecosystem. PMML is basically an xml format to define Machine learning pipelines, which allows for (sort of) interoperability between different ML Platforms.
+In particular, I have been working lately with Openscoring, a wonderful software that creates a web server with an easy to use REST api to deploy models and evaluate data with them.</description>
+    </item>
+    
+    <item>
+      <title>Video: Jornadas Data Science en Murcia</title>
+      <link>https://manugarri.github.io/blog/posts/video-jornadas-data-science-en-murcia/</link>
+      <pubDate>Mon, 08 May 2017 21:51:14 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/video-jornadas-data-science-en-murcia/</guid>
+      <description>El 21 de Abril de 2017, y gracias al apoyo de Centic y del Info de Murcia, unas 80 personas se acercaron a que yo les diera la brasa durante 3 horas sobre todo lo relacionado con Data Science.
+Aquí dejo el video. Las transparencias las podeis ver en SlideShare.
+ </description>
+    </item>
+    
+    <item>
+      <title>This is what a memory leak looks like</title>
+      <link>https://manugarri.github.io/blog/posts/this-is-what-a-memory-leak-looks-like/</link>
+      <pubDate>Tue, 04 Apr 2017 18:33:00 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/this-is-what-a-memory-leak-looks-like/</guid>
+      <description>Left, side of this chart, VSZ (virtual memory) and RSS (RAM) over time (obtained via ps) for a process using poor implementation of KafkaClient in java, which is creating a new kafka client per GET request. This is bad.
+Right side of the chart, current performance once I fixed the previous developer&amp;rsquo;s code, and implemented a singleton.</description>
+    </item>
+    
+    <item>
+      <title>Note to self: Changing loglevel in apache Spark</title>
+      <link>https://manugarri.github.io/blog/posts/note-to-self-changing-loglevel-in-apache-spark/</link>
+      <pubDate>Thu, 23 Mar 2017 11:04:11 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/note-to-self-changing-loglevel-in-apache-spark/</guid>
+      <description>Very quick note for future reference. Please ignore.
+Change loglevel in spark Easy peasy, you can do it programatically in the application like:
+spark.sparkContext.setLogLevel(&amp;quot;WARN&amp;quot;)
+Change loglevel in yarn This one took a while to find, you can just run spark-submit while previously exporting this envvar:
+export YARN_ROOT_LOGGER=${YARN_ROOT_LOGGER:-WARN,RFA}
+That´s all.</description>
+    </item>
+    
+    <item>
+      <title>How to reuse HTTP response body in Golang</title>
+      <link>https://manugarri.github.io/blog/posts/how-to-reuse-http-response-body-in-golang/</link>
+      <pubDate>Thu, 09 Mar 2017 11:08:42 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/how-to-reuse-http-response-body-in-golang/</guid>
+      <description>Took me a while to figure it out, but it seems that in golang you cant re-read from an http response.
+I found here a way to solve it.
+For debugging purposes, I had to be able to print the raw response as well as decoding it to json, to make sure that the json decoder was decoding properly
+Basically you can reset the http response body &amp;ldquo;read state&amp;rdquo; by doing this:</description>
+    </item>
+    
+    <item>
+      <title>Making a Beautiful Map of Spain in ggplot2</title>
+      <link>https://manugarri.github.io/blog/posts/making-a-beautiful-map-of-spain-in-ggplot2/</link>
+      <pubDate>Sat, 04 Feb 2017 23:27:31 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/making-a-beautiful-map-of-spain-in-ggplot2/</guid>
+      <description>A few weeks ago I read an article in which Timo Grossenbacher showed how he managed to plot, in my opinion, one of the most beautiful maps I have ever seen.
+So I went and tried to replicate it.
+First of all, here is the map.
+As usual, you can download the code &amp;amp; data included in this post in github. I pushed some earlier versions of the map as well, with different color breaks so you can see the impact that binning has in data visualization.</description>
+    </item>
+    
+    <item>
+      <title>The Sorry State of Transparency in Spain: Dude, where is my Certificate of Coverage?</title>
+      <link>https://manugarri.github.io/blog/posts/the-sorry-state-of-transparency-in-spain-where-is-my-certificate/</link>
+      <pubDate>Fri, 03 Feb 2017 18:01:41 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/the-sorry-state-of-transparency-in-spain-where-is-my-certificate/</guid>
+      <description>This post serves two purposes; First, it will hopefully get indexed by google and will help future US citizens living in Spain. Second, it will be yet another example of how bad things are in Spain regarding Open Data, Open Access and Transparency.
+For those that come looking for that info here it is: 
+1.TL:DR. How to get your Certificate of Coverage for self employed persons in Spain. This is what you do.</description>
+    </item>
+    
+    <item>
+      <title>How to mock http endpoints in Golang with custom ports</title>
+      <link>https://manugarri.github.io/blog/posts/how-to-mock-http-endpoints-in-golang/</link>
+      <pubDate>Wed, 18 Jan 2017 20:16:40 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/how-to-mock-http-endpoints-in-golang/</guid>
+      <description>So I was updating the testing suite in one of Tribe&amp;rsquo;s microservices. This one in particular deals with sending the postbacks to the right endpoints.
+If you search for testing http requests, chances are you will almost always stumble upon an example like:
+import ( &amp;quot;log&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;net/http/httptest&amp;quot; ) ts := httptest.NewServer(http.HandlerFunc(func(w ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { fmt.Fprintln(w, &amp;quot;Hello, client&amp;quot;) })) defer ts.Close() res, err := http.Get(ts.URL) if err !</description>
+    </item>
+    
+    <item>
+      <title>HDFS vs HBase in PySpark 2.0</title>
+      <link>https://manugarri.github.io/blog/posts/hdfs-vs-hbase-in-pyspark-2-0/</link>
+      <pubDate>Mon, 12 Dec 2016 18:08:51 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/hdfs-vs-hbase-in-pyspark-2-0/</guid>
+      <description>It&amp;rsquo;s been a challenging period at Tribe. In case you don&amp;rsquo;t know, I am in charge of selecting and implementing the architecture for an ad Exchange with a focus on latency and performance.
+As fun as it sounds, it is incredibly challenging, every decision in terms of tools not only affects the current performance, but given the sheer amount of data creates technical debt instantly (data migrations are always a pain, but when dealing with big data they are a big pain, hehe).</description>
+    </item>
+    
+    <item>
+      <title>Weird behavior in Class methods vs StaticMethods in Pyspark</title>
+      <link>https://manugarri.github.io/blog/posts/weird-behavior-in-class-methods-vs-staticmethods-in-pyspark/</link>
+      <pubDate>Tue, 06 Dec 2016 12:02:51 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/weird-behavior-in-class-methods-vs-staticmethods-in-pyspark/</guid>
+      <description>Note, using Spark 2.0.0 with python 2.7
+I just found a very weird behavior in PySpark. I will show it with an example. Who knows, maybe this can help someone else.
+I am processing a list of text files containing data in jsonlines format. After some fiddling I set up a basic class to process the files:
+class TestClassProcessor(object): def __init__(self): self.spark = SparkSession...GetOrCreate() @staticmethod def parse_record(self, record): ... do something with record.</description>
+    </item>
+    
+    <item>
+      <title>Raspberry reminder</title>
+      <link>https://manugarri.github.io/blog/posts/raspberry-reminder/</link>
+      <pubDate>Sun, 19 Jun 2016 20:05:58 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/raspberry-reminder/</guid>
+      <description>Tired of realizing at 4 am that I was supposed to go to bed at midnight, I took my raspberry pi from it box and finally gave it a good use. I made a small app that allows you to send reminders to the raspberry headphone from your main computer. So you can do something like this from your terminal:
+remind go to sleep 3600
+That will create an mp3 with the message &amp;ldquo;go to sleep!</description>
+    </item>
+    
+    <item>
+      <title>Install CUDA on Ubuntu 16.04</title>
+      <link>https://manugarri.github.io/blog/posts/install-cuda-on-ubuntu-16-04/</link>
+      <pubDate>Sat, 18 Jun 2016 18:42:44 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/install-cuda-on-ubuntu-16-04/</guid>
+      <description>For the record, my graphic card is a GTX 870M.
+ Install Nvidia recommended drivers. You can find it out by using the command ubuntu-drivers devices. It will tell you the recommended driver you should install via apt-get (I installed nvidia-361).  2.Restart
+3.Download CUDA Toolkit from here or Direct link to version 5.7.18 I used
+ Run the file  ./cuda_7.5.18_linux.run
+Make sure to say yes to everything EXCEPT the prompt that reads:</description>
+    </item>
+    
+    <item>
+      <title>Video, A primer on recommendation systems</title>
+      <link>https://manugarri.github.io/blog/posts/video-a-primer-on-recommendation-systems/</link>
+      <pubDate>Sun, 22 May 2016 21:02:37 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/video-a-primer-on-recommendation-systems/</guid>
+      <description>Last April I gave a talk on PyData Madrid 2016 about recommendation systems. Here is the video in case you wanna check it out.
+ And here is the repository with the slides, code &amp;amp; data.</description>
+    </item>
+    
+    <item>
+      <title>Modifying NYT ingredient tagger to a sole python implementation</title>
+      <link>https://manugarri.github.io/blog/posts/nyt_tagger/</link>
+      <pubDate>Thu, 05 May 2016 13:39:27 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/nyt_tagger/</guid>
+      <description>NOTE: This is a jupyter notebook converted to markdown. As such, it does not look quite good. The original notebook can be seen here.
+.highlight{background: # f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .1em;padding:0em .5em;border-radius: 4px;} .k{color: # 338822; font-weight: bold;} .kn{color: # 338822; font-weight: bold;} .mi{color: # 000000;} .o{color: # 000000;} .ow{color: # BA22FF; font-weight: bold;} .nb{color: # 338822;} .n{color: # 000000;} .s{color: # cc2222;} .se{color: # cc2222; font-weight: bold;} .si{color: # C06688; font-weight: bold;} .</description>
+    </item>
+    
+    <item>
+      <title>How to make your script better</title>
+      <link>https://manugarri.github.io/blog/posts/how-to-make-your-script-2x-better/</link>
+      <pubDate>Thu, 05 May 2016 10:20:07 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/how-to-make-your-script-2x-better/</guid>
+      <description>We have all been there. The first time you realize you know enough programming language that you want to make something. One of the best things the Python community has is that it encourages the newcomers to not only build amazing things, but to share them with everyone, and thus the community gets better.
+However, I have been noticing a pattern in some of these projects. You know which ones I am talking about.</description>
+    </item>
+    
+    <item>
+      <title>Where the f*** can I park?</title>
+      <link>https://manugarri.github.io/blog/posts/where-the-f-can-i-park/</link>
+      <pubDate>Sun, 21 Feb 2016 18:32:35 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/where-the-f-can-i-park/</guid>
+      <description>TL;DR I made a map showing the different residential parking areas in my city.
+It is the first map of this data that exists, and I am disappointed with the Spanish Government Open Data policies.
+You can check out the map here. I also shared the code required to create this map as a jupyter notebook here.
+An introduction, and a bit of ranting. After living in NYC for quite some time, I recently moved to Murcia, Spain to be closer to my family.</description>
+    </item>
+    
+    <item>
+      <title>Quick Note to myself regarding wireless power management in Ubuntu 14.04</title>
+      <link>https://manugarri.github.io/blog/posts/quick-note-to-myself-regarding-wireless-power-management-in-ubuntu-14-04/</link>
+      <pubDate>Thu, 11 Feb 2016 09:45:41 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/quick-note-to-myself-regarding-wireless-power-management-in-ubuntu-14-04/</guid>
+      <description>Hey Manuel of the future.
+Next time you format your ubuntu machine, just do this to fix all those annoying wifi issues.
+ Go to /etc/network/interfaces and edit the file like this:  # interfaces(5) file used by ifup(8) and ifdown(8) auto lo auto wlan0 iface lo inet loopback  (this is assuming your wireless interface is wlan0)
+Then do as follows (found on an ubuntu forums post from 2011, sigh).</description>
+    </item>
+    
+    <item>
+      <title>A short introduction to Recommendation Systems</title>
+      <link>https://manugarri.github.io/blog/posts/a-short-introduction-to-recommendation-systems/</link>
+      <pubDate>Sat, 05 Dec 2015 21:27:33 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/a-short-introduction-to-recommendation-systems/</guid>
+      <description>In this tutorial, we will dive into recommendation systems.
+You might not know what recommendation systems are but you see them everywhere on the internet.
+Everytime you shop on Amazon and you see related products&amp;hellip;
+Or when Netflix recommends you something interesting to watch&amp;hellip;
+The purpose of a recommendation system is to predict a rating that a user will give to an item that they have not yet rated.</description>
+    </item>
+    
+    <item>
+      <title>Sentiment analysis in Spanish</title>
+      <link>https://manugarri.github.io/blog/posts/sentiment-analysis-in-spanish/</link>
+      <pubDate>Thu, 12 Nov 2015 21:40:20 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/sentiment-analysis-in-spanish/</guid>
+      <description>Note: (This is a continuation of a previous article in which I explained how to download and plot a heatmap of thousand of tweets sent from my hometown.)
+You can find the code I used for this tutorial in github. I also uploaded the tweets file so you can follow along without having to download the tweets by yourself. On this post, I will focus on how to perform Sentiment Analysis on a Spanish corpus.</description>
+    </item>
+    
+    <item>
+      <title>Plotting 100K tweets from my home town</title>
+      <link>https://manugarri.github.io/blog/posts/plotting-100k-tweets-from-my-home-town/</link>
+      <pubDate>Tue, 03 Nov 2015 23:13:45 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/plotting-100k-tweets-from-my-home-town/</guid>
+      <description>I have been wanting to play with the Twitter API for a long time. Last summer, I thought that it would be interesting to plot a map of my hometown (Murcia, Spain, very nice city with amazing food) showing a heatmap of tweets.
+The idea is that by plotting those tweets, I could find interesting insights about my city, such as:
+ In which areas are people tweeting the most Which times of the day are the most active Which are the happiest/saddest places Are there any foreign twitter communities?</description>
+    </item>
+    
+    <item>
+      <title>Teaching recurrent Neural Networks about Monet</title>
+      <link>https://manugarri.github.io/blog/posts/teaching-recurrent-neural-networks-about-monet/</link>
+      <pubDate>Sun, 02 Aug 2015 03:17:05 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/teaching-recurrent-neural-networks-about-monet/</guid>
+      <description>Recurrent Neural Networks have boomed in popularity over the past months, thanks to articles like the amazing The Unreasonable Effectiveness of Recurrent Neural Networks by Andrej Karpathy.
+Long story short, Recurrent Neural Networks (RNNs) are a type of NNs that can work over sequences of vectors and where their elements keep track of their state history.
+Neural Networks are increasingly easy to use, specially in the Python ecosystem, with libraries like Caffe, Keras or Lasagne making the assembly of neural networks a trivial task.</description>
+    </item>
+    
+    <item>
+      <title>How to do s3 copy to AWS Redshift for Timestamp Data.</title>
+      <link>https://manugarri.github.io/blog/posts/how-to-do-s3-copy-to-aws-redshift-for-timestamp-data/</link>
+      <pubDate>Fri, 20 Mar 2015 19:01:48 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/how-to-do-s3-copy-to-aws-redshift-for-timestamp-data/</guid>
+      <description>Quick note, might save some headaches to future me.
+ COPY {name} FROM &#39;s3://{bucket_name}/data-{name}&#39; credentials &#39;aws_access_key_id={AWS_ACCESS_KEY};aws_secret_access_key={AWS_SECRET_KEY}&#39; CSV IGNOREHEADER as 1 GZIP DATEFORMAT as &#39;auto&#39; ACCEPTANYDATE ;  The trick is to use DATEFORMAT as &#39;auto&#39; ACCEPTANYDATE</description>
+    </item>
+    
+    <item>
+      <title>The Best Books that I read in 2014</title>
+      <link>https://manugarri.github.io/blog/posts/the-best-books-that-i-read-in-2014/</link>
+      <pubDate>Thu, 11 Dec 2014 00:54:29 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/the-best-books-that-i-read-in-2014/</guid>
+      <description>Following the example of [Bill Gates](), here is the list of the best books I read this year:
+Work  Data Science for Business, by Foster Provost. This book is hands down, the perfect book for those who want to get into the amazing world of Data Science. It starts from a very high level point, and drills down to the equations and reasoning underlying each Machine Learning Algorithm.  It is also a good book for those like us who want to find good analogies to explain highly mathematical models to those who are not so knowledgeable.</description>
+    </item>
+    
+    <item>
+      <title>What if a Zombie outbreak happened in Spain?</title>
+      <link>https://manugarri.github.io/blog/posts/what-if-a-zombie-outbreak-happened-in-spain/</link>
+      <pubDate>Fri, 05 Dec 2014 14:27:28 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-if-a-zombie-outbreak-happened-in-spain/</guid>
+      <description>I found an interesting article in Max Berggren&amp;rsquo;s Blog, where he implements an SIR Model, a Survival - Infected - Removed model that simulates the spread of diseases.
+Max did it for Norway, but I wanted to see what would happened if a Zombie outbreak would happen in my home country, Spain.
+I wanted to check how much of an impact the location of the patien zero would have on the spread of the disease.</description>
+    </item>
+    
+    <item>
+      <title>Building a Recommendation Engine for Reddit. Part 4</title>
+      <link>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-4/</link>
+      <pubDate>Mon, 01 Dec 2014 02:36:45 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-4/</guid>
+      <description>On this final part of my series about Building a recommendation engine for Reddit I will explain how to use the similarity engine on a web application.
+We left Part 3 with a fully functional similarity engine, that given a set of subreddits for a Redditor it would return the top N subreddits that are more similar to that initial set.
+Step 4. Building the web application To build the web application, we need to decide how to implement it.</description>
+    </item>
+    
+    <item>
+      <title>Building a Recommendation Engine for Reddit. Part 3</title>
+      <link>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-3/</link>
+      <pubDate>Mon, 17 Nov 2014 04:09:48 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-3/</guid>
+      <description>We left Part 2 with a dataset including a set of Redditors and the Subreddits they comment on. We also defined which similarity index we are going to use to measure the similarity among each Subreddit.
+So, let&amp;rsquo;s continue!
+Step 3. Calculating Subreddit similarity Let&amp;rsquo;s refresh how we want the Subreddit similarity table look like
+ sub1 | sub2 | similarity funny | aww | similarity(funnny-aww) funny | Iama | similarity(funny-Iama) .</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-10/</link>
+      <pubDate>Thu, 13 Nov 2014 00:10:33 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-10/</guid>
+      <description>Life  Today I learned that hackers can gain information about which sites have you visited by using CSS Selectors
+ Today I learned that I belong to a selective group with a genetic mutation that makes as hate cilantro (I HATE IT!)
+  Work  Today I learned about Flask Command line Interface a new feature of Flask that allows running view functions directly from the command line without having a context.</description>
+    </item>
+    
+    <item>
+      <title>Building a Recommendation Engine for Reddit. Part 2</title>
+      <link>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-2/</link>
+      <pubDate>Wed, 12 Nov 2014 14:43:47 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-2/</guid>
+      <description>Step 2. Building the dataset On part 1 of this tutorial we laid out the project in detail, and decided that in order to calculate the similarity between two subs, we just need to find the list of users on each one.
+However, this methodology becomes a computational problem when you consider the magnitud of Reddit. Reddit has more than 300,000 subreddits, and more than 100 Million users (6% of the US population), so we need to narrow a little bit the data that we need.</description>
+    </item>
+    
+    <item>
+      <title>Building a Recommendation Engine for Reddit. Part 1</title>
+      <link>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-1/</link>
+      <pubDate>Wed, 12 Nov 2014 03:35:10 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-1/</guid>
+      <description>This is the breakdown of how I built Find a Sub, a Recommendation Engine for Reddit.
+It might be helpful while you read the blog post if you clone the repository with the code.
+The reason why I built this is because I think that the default ways to discover Subreddits is not optimal. Basically there are two ways (that I can think of) to find new subreddits.
+ Going to subreddits such as Bestof of Subreddit of the day to find new subreddits.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-9/</link>
+      <pubDate>Sun, 02 Nov 2014 17:21:56 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-9/</guid>
+      <description>Life 
+ I learned that in Ubuntu, to restart Unity and get back all the widgets (a bug that happens from time to time removes some widgets from your panel), you can restart unity by doing:
+killall unity-panel-service  I learned that in Ubuntu, in those cases where launchpad repositories cannot be resolved when doing an update, the reason might be because of missing settings when setting the repositories.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-8/</link>
+      <pubDate>Fri, 24 Oct 2014 23:27:49 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-8/</guid>
+      <description> Life 
+ I learned that almost every hospital-born child in the US appears on her first picture wrapped in the same blanket  Work 
+ I learned that in Go, the way to format a Time object into the format you want is by using Monday, January 2nd 2006 at 3:04pm as a template. I wonder how they came up with that specific date.  </description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-7/</link>
+      <pubDate>Wed, 22 Oct 2014 23:49:41 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-7/</guid>
+      <description>Work  I learned that in Unix, you can use &amp;amp; to run a command in the background. A lightweight alternative to screen/tmux. Then you can use fg to bring that process to the foreground.  Life  I learned that one of the first investors in Wizards of The Coast was a Janitor!.  Spanish  He aprendido que el Tato, personaje usado en muchas expresiones en Espanha, fue un torero del siglo XIX famoso por su tenacidad.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-5/</link>
+      <pubDate>Mon, 20 Oct 2014 00:18:21 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-5/</guid>
+      <description>Work 
+ I learned about httpbin , a very simple yet useful api to test other apis, provides useful endpoints for very simple tasks  For example, to find an aws public ip you can use httpbin like:
+ curl http://httpbin.org/ip   I learned about docopt a very nice and intuitive module to add arguments to a command line program in python.
+Life 
+ I learned that the reason there are almost no female sushi chefs is because of the traditional belief that women&amp;rsquo;s menstruation, perfume and makeup can &amp;ldquo;affect the delicate and sophisticated form of Japanese cooking&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-6/</link>
+      <pubDate>Sat, 18 Oct 2014 02:05:40 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-6/</guid>
+      <description>Work 
+ I learned how to use [pyinstaller]() to convert a python application to a binary file. As easy as:
+pyinstaller entrypoint.py -F   To produce a self-contained binary file on the dist subfolder from where you called the command.
+ I learned about mpl3d, a library that convert Pandas matplotlib base plots into beautiful, d3.js based plots. To use mpl3d on an iPython notebook, a single line of code is necessary:</description>
+    </item>
+    
+    <item>
+      <title>The Path to Code. Part 2</title>
+      <link>https://manugarri.github.io/blog/posts/the-path-to-code-part-2/</link>
+      <pubDate>Thu, 16 Oct 2014 20:42:47 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/the-path-to-code-part-2/</guid>
+      <description>This is a continuation of a previous post that aims to be a very subjective guide for those who, like me not long ago, have a strong interest in programming but do not know how to start.
+On part 1 you got some advice about what being a programmer, you picked up a language to learn ( and hopefully you chose python) and you more or less learned that language syntax.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-4/</link>
+      <pubDate>Thu, 16 Oct 2014 00:57:51 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-4/</guid>
+      <description>Work 
+ I learned that Pandas can interact with sqlAlchemy and many other python modules creating an amazing data ecosystem  Image from tonight&amp;rsquo;s PyData NYC meetup. Courtesy of Jeff Rebacks
+ I learned of Project Jupyter, a version of iPython Notebook that works with Juliam Python and R  Life  I learned of MIT&amp;rsquo;s App Inventor, an esay way of learning how to develop Android applications. I folowed this awesome tutorials.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-3/</link>
+      <pubDate>Mon, 06 Oct 2014 22:46:11 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-3/</guid>
+      <description>Work 
+ I learned that in Docker, if you want to see the status of the last container you built, instead of doing docker ps -a (which lists all the containers, and thus can force you to scroll up to see the last one), you can do docker ps -l, whcih instead just lists the latest container.  By the way, if you are playing with Docker (or to be more precise, fighting with it) and you have a loooong list of containers running, you can add this alias to your .</description>
+    </item>
+    
+    <item>
+      <title>The Path to Code. Part 1</title>
+      <link>https://manugarri.github.io/blog/posts/the-path-to-code-part-1/</link>
+      <pubDate>Fri, 03 Oct 2014 01:02:01 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/the-path-to-code-part-1/</guid>
+      <description>Less than 18 months ago, the only Coding knowledge I had was using VBA (excel macros).
+Over the past year, I have succesfully built projects using a myriad of languages like Python, Go, Ruby, R, javascript, learned what are databases and used different ones like postgresql, sqlite or mongodb for example.
+In this two-part article I would like to share the steps &amp;amp; resources that helped me learn how to code (or The Path).</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today-2/</link>
+      <pubDate>Thu, 02 Oct 2014 02:21:24 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today-2/</guid>
+      <description>Work 
+ I learned that Google Analytics Reporting api has a limit in the number of characters that you can send as filters.  Found it the hard way, when doing a query, and filtering for a set of domains (excluding test sites, demo sites, etc), the api returned an error.
+ 400 : Invalid expression. Expression exceeds max size of 4096  which interestingly is not documented in Google Api Errors.</description>
+    </item>
+    
+    <item>
+      <title>What I learned today</title>
+      <link>https://manugarri.github.io/blog/posts/what-i-learned-today/</link>
+      <pubDate>Tue, 30 Sep 2014 23:35:09 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/what-i-learned-today/</guid>
+      <description>Work  I learned that in Ruby on Rails, Sidekiq can run cron-like jobs with the help of Sidetiq. It&amp;rsquo;s as easy as writing a Worker and adding this line after the definition:
+Class ScheduledWorker: include Sidekiq::Worker include Sidetiq::Schedulable recurrent { hourly } ... end   And you can substitute hourly by minutely, daily or minutely(5) if you want the worker to run every 5 minutes for example.</description>
+    </item>
+    
+    <item>
+      <title>How to easily set up Subdomain routing in Nginx</title>
+      <link>https://manugarri.github.io/blog/posts/how-to-easily-set-up-subdomain-routing-in-nginx/</link>
+      <pubDate>Tue, 30 Sep 2014 00:42:27 +0000</pubDate>
+      
+      <guid>https://manugarri.github.io/blog/posts/how-to-easily-set-up-subdomain-routing-in-nginx/</guid>
+      <description>As i was going through the fun process of setting up a Digital Ocean instance for my blog, I realized that i had a couple other projects I would like to spin of in the same instance.
+All of those projects are web applications, and thus, require an opened port to receive the incoming requests.
+Previously I had been happy with Dokku, an open source Docker-based heroku, but the lack of support (it is an open source project after all) and my lack of Docker knowledge made me spend more time fixing dokku than I was happy with.</description>
+    </item>
+    
   </channel>
 </rss>

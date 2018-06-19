@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>How to easily set up Subdomain routing in Nginx | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">September 30, 2014</h2>
+    <h1 class="title">How to easily set up Subdomain routing in Nginx</h1>
+    
+    <div class="content">
+      
+
+<p><img src="http://i.imgur.com/ALUB3kH.png" alt="&lt;3 Nginx" /></p>
+
+<p>As i was going through the fun process of setting up a <a href="digitalocean.com" target="_blank">Digital Ocean</a> instance for my blog, I realized that i had a couple other projects I would like to spin of in the same instance.</p>
+
+<p>All of those projects are web applications, and thus, require an opened port to receive the incoming requests.</p>
+
+<p>Previously I had been happy with <a href="https://github.com/progrium/dokku" target="_blank">Dokku</a>, an open source Docker-based heroku,  but the lack of support (it is an open source project after all) and my lack of Docker knowledge made me spend more time fixing dokku than I was happy with.</p>
+
+<p>Eventually, I decided to just use git to control my production apps and implement the subdomain routing in <a href="http://wiki.nginx.org/Main" target="_blank">Nginx</a> (pronounced <em>engine-x</em>), which seems easy except for the fact that I could not find any easy example of subdomain routing online.</p>
+
+<h4 id="nginx-implementation">Nginx Implementation.</h4>
+
+<p>First of all, install Nginx.</p>
+
+<p><code>sudo apt-get install nginx</code> for Linux systems or,</p>
+
+<p><code>brew install nginx</code> for Mac.</p>
+
+<p>Then edit the default Nginx configuration file:</p>
+
+<p><code>sudo nano /etc/nginx/sites-enabled/default</code></p>
+
+<p>In my case, I wanted to set up the following routes:</p>
+
+<ul>
+<li><a href="http://manugarri.com" target="_blank">manugarri.com</a> should point to my personal page.</li>
+<li><a href="http://blog.manugarri.com" target="_blank">blog.manugarri.com</a> should point to this blog.</li>
+<li><a href="http://colores.manugarri.com" target="_blank">colores.manugarri.com</a> should point to my latest color experiment <em>(go check it out!)</em></li>
+</ul>
+
+<p>And I used this snippet for the nginx configuration file:</p>
+
+<pre><code>server {
+    listen 80;
+server_name manugarri.com;
+        location / {
+            proxy_set_header X-Real-IP $remote_addr;
+             proxy_set_header X-Forwarded-For $remote_addr;
+             proxy_set_header Host $host;
+            proxy_pass http://127.0.0.1:{PORT1};
+        }
+}
+
+server {
+    listen 80;
+server_name colores.manugarri.com;
+        location / {
+            proxy_set_header X-Real-IP $remote_addr;
+             proxy_set_header X-Forwarded-For $remote_addr;
+             proxy_set_header Host $host;
+            proxy_pass http://127.0.0.1:{PORT2};
+        }
+}
+
+server {
+    listen 80;
+server_name blog.manugarri.com;
+        location / {
+            proxy_set_header X-Real-IP $remote_addr;
+             proxy_set_header X-Forwarded-For $remote_addr;
+             proxy_set_header Host $host;
+            proxy_pass http://127.0.0.1:{PORT3};
+        }
+}
+</code></pre>
+
+<p><em>(note that the {PORT NUMBERS} should be replaced by the ports your applications are listening to.</em></p>
+
+<p>As you see, the file it&rsquo;s easy to understand. Nginx listens to all the specific subdomains (or the main domain) and redirect to the proper app.</p>
+
+<p>Let me know your questions!.</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

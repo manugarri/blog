@@ -8,6 +8,246 @@
   </url>
   
   <url>
+    <loc>https://manugarri.github.io/blog/posts/note-to-self-pyspark-failling-with-error-while-instantiating-org-apache-spark-sql-hive-hivesessionstate/</loc>
+    <lastmod>2018-05-22T10:12:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/</loc>
+    <lastmod>2018-04-19T08:36:22+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/</loc>
+    <lastmod>2018-01-31T14:24:33+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/note-to-self-disable-caps-lock-in-ubuntu-16-04/</loc>
+    <lastmod>2017-10-25T09:08:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-is-it-to-work-in-a-startup-the-good-and-bad/</loc>
+    <lastmod>2017-10-25T09:05:16+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/til-about-bfg-repo-cleaner/</loc>
+    <lastmod>2017-10-23T08:24:08+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/video-usos-del-machine-learning-aplicados-al-e-commerce/</loc>
+    <lastmod>2017-09-26T12:14:32+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/handle-missing-categoricals-with-pmml/</loc>
+    <lastmod>2017-06-15T23:17:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/video-jornadas-data-science-en-murcia/</loc>
+    <lastmod>2017-05-08T21:51:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/this-is-what-a-memory-leak-looks-like/</loc>
+    <lastmod>2017-04-04T18:33:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/note-to-self-changing-loglevel-in-apache-spark/</loc>
+    <lastmod>2017-03-23T11:04:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/how-to-reuse-http-response-body-in-golang/</loc>
+    <lastmod>2017-03-09T11:08:42+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/making-a-beautiful-map-of-spain-in-ggplot2/</loc>
+    <lastmod>2017-02-04T23:27:31+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/the-sorry-state-of-transparency-in-spain-where-is-my-certificate/</loc>
+    <lastmod>2017-02-03T18:01:41+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/how-to-mock-http-endpoints-in-golang/</loc>
+    <lastmod>2017-01-18T20:16:40+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/hdfs-vs-hbase-in-pyspark-2-0/</loc>
+    <lastmod>2016-12-12T18:08:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/weird-behavior-in-class-methods-vs-staticmethods-in-pyspark/</loc>
+    <lastmod>2016-12-06T12:02:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/raspberry-reminder/</loc>
+    <lastmod>2016-06-19T20:05:58+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/install-cuda-on-ubuntu-16-04/</loc>
+    <lastmod>2016-06-18T18:42:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/video-a-primer-on-recommendation-systems/</loc>
+    <lastmod>2016-05-22T21:02:37+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/nyt_tagger/</loc>
+    <lastmod>2016-05-05T13:39:27+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/how-to-make-your-script-2x-better/</loc>
+    <lastmod>2016-05-05T10:20:07+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/where-the-f-can-i-park/</loc>
+    <lastmod>2016-02-21T18:32:35+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/quick-note-to-myself-regarding-wireless-power-management-in-ubuntu-14-04/</loc>
+    <lastmod>2016-02-11T09:45:41+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/a-short-introduction-to-recommendation-systems/</loc>
+    <lastmod>2015-12-05T21:27:33+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/sentiment-analysis-in-spanish/</loc>
+    <lastmod>2015-11-12T21:40:20+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/plotting-100k-tweets-from-my-home-town/</loc>
+    <lastmod>2015-11-03T23:13:45+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/teaching-recurrent-neural-networks-about-monet/</loc>
+    <lastmod>2015-08-02T03:17:05+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/how-to-do-s3-copy-to-aws-redshift-for-timestamp-data/</loc>
+    <lastmod>2015-03-20T19:01:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/the-best-books-that-i-read-in-2014/</loc>
+    <lastmod>2014-12-11T00:54:29+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-if-a-zombie-outbreak-happened-in-spain/</loc>
+    <lastmod>2014-12-05T14:27:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-4/</loc>
+    <lastmod>2014-12-01T02:36:45+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-3/</loc>
+    <lastmod>2014-11-17T04:09:48+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-10/</loc>
+    <lastmod>2014-11-13T00:10:33+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-2/</loc>
+    <lastmod>2014-11-12T14:43:47+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/building-a-recommendation-engine-for-reddit-part-1/</loc>
+    <lastmod>2014-11-12T03:35:10+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-9/</loc>
+    <lastmod>2014-11-02T17:21:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-8/</loc>
+    <lastmod>2014-10-24T23:27:49+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-7/</loc>
+    <lastmod>2014-10-22T23:49:41+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-5/</loc>
+    <lastmod>2014-10-20T00:18:21+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-6/</loc>
+    <lastmod>2014-10-18T02:05:40+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/the-path-to-code-part-2/</loc>
+    <lastmod>2014-10-16T20:42:47+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-4/</loc>
+    <lastmod>2014-10-16T00:57:51+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-3/</loc>
+    <lastmod>2014-10-06T22:46:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/the-path-to-code-part-1/</loc>
+    <lastmod>2014-10-03T01:02:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today-2/</loc>
+    <lastmod>2014-10-02T02:21:24+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/what-i-learned-today/</loc>
+    <lastmod>2014-09-30T23:35:09+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://manugarri.github.io/blog/posts/how-to-easily-set-up-subdomain-routing-in-nginx/</loc>
+    <lastmod>2014-09-30T00:42:27+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://manugarri.github.io/blog/</loc>
     <lastmod>2018-06-19T20:49:51+02:00</lastmod>
     <priority>0</priority>

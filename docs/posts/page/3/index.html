@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.42.1" />
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title></title>
+<title>Posts | Manugarri&#39;s blog</title>
 
 
 <link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -95,10 +94,11 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">June 19, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/hellow_world/">Hellow_world</a></h1>
+      <h2 class="subtitle is-6">April 4, 2017</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/this-is-what-a-memory-leak-looks-like/">This is what a memory leak looks like</a></h1>
       <div class="content">
-        Hey
+        Left, side of this chart, VSZ (virtual memory) and RSS (RAM) over time (obtained via ps) for a process using poor implementation of KafkaClient in java, which is creating a new kafka client per GET request. This is bad.
+Right side of the chart, current performance once I fixed the previous developer&rsquo;s code, and implemented a singleton.
         
       </div>
     </article>
@@ -107,12 +107,15 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">May 22, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-pyspark-failling-with-error-while-instantiating-org-apache-spark-sql-hive-hivesessionstate/">Note to self. Pyspark failling with &#39;Error while instantiating &#39;org.apache.spark.sql.hive.HiveSessionState&#39;</a></h1>
+      <h2 class="subtitle is-6">March 23, 2017</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-changing-loglevel-in-apache-spark/">Note to self: Changing loglevel in apache Spark</a></h1>
       <div class="content">
-        If you run pyspark and see this error (it happens in scala-shell as well):
-Error while instantiating ‘org.apache.spark.sql.hive.HiveSessionState’  The solution is easy, yet ridiculous. 1. Create the folder /tmp/hive 2. Give it chmod permissions sudo chmod -R 777 /tmp/hive
-Found here
+        Very quick note for future reference. Please ignore.
+Change loglevel in spark Easy peasy, you can do it programatically in the application like:
+spark.sparkContext.setLogLevel(&quot;WARN&quot;)
+Change loglevel in yarn This one took a while to find, you can just run spark-submit while previously exporting this envvar:
+export YARN_ROOT_LOGGER=${YARN_ROOT_LOGGER:-WARN,RFA}
+That´s all.
         
       </div>
     </article>
@@ -121,13 +124,15 @@ Found here
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">April 19, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/">Note to self: Fixing encoding in Golang ascii85</a></h1>
+      <h2 class="subtitle is-6">March 9, 2017</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/how-to-reuse-http-response-body-in-golang/">How to reuse HTTP response body in Golang</a></h1>
       <div class="content">
-        Yesterday I spent a few hours dealing with what I like to call &ldquo;the edges of StackOverflow&rdquo;. By that I mean those situations in which you are trying to solve a programming problem (mostly a bug) and you have no idea why its happening, and even worse, no amount of search (in StackOverflow or Github) yield any information that might seem somewhat related to the issue.
-I think this xkcd strip puts it quite clearly:
+        Took me a while to figure it out, but it seems that in golang you cant re-read from an http response.
+I found here a way to solve it.
+For debugging purposes, I had to be able to print the raw response as well as decoding it to json, to make sure that the json decoder was decoding properly
+Basically you can reset the http response body &ldquo;read state&rdquo; by doing this:
         
-        <a class="button is-link" href="https://manugarri.github.io/blog/posts/note-to-self-fixing-encoding-in-golang-ascii85/" style="height:28px">
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/how-to-reuse-http-response-body-in-golang/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>
@@ -141,17 +146,15 @@ I think this xkcd strip puts it quite clearly:
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">January 31, 2018</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/">Note to self:Print statements not showing up on systemd logs? Do this</a></h1>
+      <h2 class="subtitle is-6">February 4, 2017</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/making-a-beautiful-map-of-spain-in-ggplot2/">Making a Beautiful Map of Spain in ggplot2</a></h1>
       <div class="content">
-        Let&rsquo;s assume we have a service set up as follows:
-[Unit] Description=systemd_microservice [Service] User=USER Group=GROUP WorkingDirectory=systemd_working_directory ExecStart=/usr/bin/python python_scripts.py SuccessExitStatus=143 TimeoutStopSec=10 Restart=on-failure RestartSec=10 [Install] WantedBy=multi-user.target  And inside python_script.py you have a bunch of print statements.
-You set up your service and your surprise when you do
-sudo journalctl -f -u python_service.service
-The logs dont show up!
-The reason is python stdout is being buffered when redirected to journal, and thus it only shows up in blocks
+        A few weeks ago I read an article in which Timo Grossenbacher showed how he managed to plot, in my opinion, one of the most beautiful maps I have ever seen.
+So I went and tried to replicate it.
+First of all, here is the map.
+As usual, you can download the code &amp; data included in this post in github. I pushed some earlier versions of the map as well, with different color breaks so you can see the impact that binning has in data visualization.
         
-        <a class="button is-link" href="https://manugarri.github.io/blog/posts/note-to-self-print-statements-not-showing-up-on-systemd-logs-do-this/" style="height:28px">
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/making-a-beautiful-map-of-spain-in-ggplot2/" style="height:28px">
           Read more
           <span class="icon is-small">
             <i class="fa fa-angle-double-right"></i>
@@ -165,13 +168,19 @@ The reason is python stdout is being buffered when redirected to journal, and th
       <div class="subtitle tags is-6 is-pulled-right">
         
       </div>
-      <h2 class="subtitle is-6">October 25, 2017</h2>
-      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/note-to-self-disable-caps-lock-in-ubuntu-16-04/">Note to self: Disable caps lock in Ubuntu 16.04</a></h1>
+      <h2 class="subtitle is-6">February 3, 2017</h2>
+      <h1 class="title"><a href="https://manugarri.github.io/blog/posts/the-sorry-state-of-transparency-in-spain-where-is-my-certificate/">The Sorry State of Transparency in Spain: Dude, where is my Certificate of Coverage?</a></h1>
       <div class="content">
-        Sources: here and here
-This post shows how to disable the caps lock key and enables it only by pressing both shift keys together.
-1. Install DCONF $ sudo apt-get install dconf-tools
-2. Disable caps lock and reenable it as pressing both shift keys at once: $ setxkbmap -option &quot;caps:none&quot; $ setxkbmap -option &quot;shift:both_capslock&quot;
+        This post serves two purposes; First, it will hopefully get indexed by google and will help future US citizens living in Spain. Second, it will be yet another example of how bad things are in Spain regarding Open Data, Open Access and Transparency.
+For those that come looking for that info here it is: 
+1.TL:DR. How to get your Certificate of Coverage for self employed persons in Spain. This is what you do.
+        
+        <a class="button is-link" href="https://manugarri.github.io/blog/posts/the-sorry-state-of-transparency-in-spain-where-is-my-certificate/" style="height:28px">
+          Read more
+          <span class="icon is-small">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </a>
         
       </div>
     </article>
@@ -184,12 +193,23 @@ This post shows how to disable the caps lock key and enables it only by pressing
       <div class="level-left">
         <div class="level-item">
           
+          <a class="button" href="/blog/posts/page/2/">
+            <span class="icon is-small is-marginless">
+              <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <polyline points="15 18 9 12 15 6"/>
+    
+  </svg>
+            </span>
+            Newer
+          </a>
+          
         </div>
       </div>
       <div class="level-right is-marginless">
         <div class="level-item">
           
-          <a class="button" href="/blog/page/2/">
+          <a class="button" href="/blog/posts/page/4/">
             Older
             <span class="icon is-small is-marginless">
               <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
@@ -217,4 +237,5 @@ This post shows how to disable the caps lock key and enables it only by pressing
 
 </body>
 </html>
+
 

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Building a Recommendation Engine for Reddit. Part 3 | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">November 17, 2014</h2>
+    <h1 class="title">Building a Recommendation Engine for Reddit. Part 3</h1>
+    
+    <div class="content">
+      
+
+<p>We left <a href="http://blog.manugarri.com/building-a-recommendation-engine-for-reddit-part-2/" target="_blank">Part 2</a> with a dataset including a set of Redditors and the Subreddits they comment on. We also defined which similarity index we are going to use to measure the similarity among each Subreddit.</p>
+
+<p>So, let&rsquo;s continue!</p>
+
+<h4 id="step-3-calculating-subreddit-similarity">Step 3. Calculating Subreddit similarity</h4>
+
+<p>Let&rsquo;s refresh how we want the Subreddit similarity table look like</p>
+
+<pre><code> sub1     |  sub2   |  similarity
+
+funny     |  aww    |  similarity(funnny-aww)
+
+funny     |  Iama   |  similarity(funny-Iama)
+
+...
+</code></pre>
+
+<p>My first implementation of the Similarity calculation algorithm was done in Python.
+However, this task is very heavy in terms of processing, so I ended up writing another implementation in Go (Go language performs better than Python in general).</p>
+
+<p>The algorithm goes like this:
+0. Sort all the Subreddits alphabetically
+1. for each Subreddit, <code>sub1</code>:
+2. For each other subreddit <strong>alphabetically after sub1</strong>, <code>sub2</code>:
+3. Calculate the number of users who wrote comments in <em>sub1 AND sub2</em>, <code>Union1-2</code>.
+4. Calculate the number of users who wrote comments in <em>sub1 OR sub2</em>, <code>Intersection1-2</code>.
+5. Calculate the Jaccard Similarity Index of sub1 and sub2 as <code>similarity1-2 = Union1-2 / Intersection1-2</code>.
+6. Write on the <code>similarity</code> table the row <code>sub1,sub2,similarity1-2</code>.</p>
+
+<p>Here is the code to implement the algorithm:</p>
+
+<pre><code class="language-prettyprint">package main
+
+import (
+	&quot;database/sql&quot;
+	&quot;log&quot;
+	&quot;sync&quot;
+
+	&quot;utils&quot;
+
+	&quot;github.com/coopernurse/gorp&quot;
+	_ &quot;github.com/lib/pq&quot;
+)
+
+func main() {
+	dbmap := InitDb()
+	var subs []string
+	n_threads := 200 //This will depend on the computing power of your machine
+	_, err := dbmap.Select(&amp;subs, &quot;select distinct(sub) from redditors_comments order by sub asc&quot;)
+	utils.CheckErr(err, &quot;Error selecting redditors&quot;)
+	calculateSimilarity(subs, n_threads)
+}
+func createSplitSlice(s []string, n int) [][]string {
+	lenSlice := int(len(s) / n)
+	splitSlice := make([][]string, n)
+	i := 0
+	for _, e := range s {
+		if len(splitSlice) &gt; lenSlice {
+			i = i + 1
+		}
+		splitSlice[i] = append(splitSlice[i], e)
+
+	}
+	return splitSlice
+}
+
+type SimilarityComments struct {
+	Sub1       string  `db:&quot;sub1&quot;`
+	Sub2       string  `db:&quot;sub2&quot;`
+	Similarity float64 `db:&quot;similarity&quot;`
+}
+
+func InitDb() *gorp.DbMap {
+	user := &lt;DB_USER&gt;
+	password := &lt;DB_PWD&gt;
+	host := &lt;DB_HOST&gt;
+	port := &lt;DB_PORT&gt;
+	dbname := &lt;DB_NAME&gt;
+
+	dbString := &quot;host=&quot; + host +
+		&quot; port=&quot; + port +
+		&quot; user=&quot; + user +
+		&quot; password=&quot; + password +
+		&quot; dbname=&quot; + dbname
+	db, err := sql.Open(&quot;postgres&quot;, dbString)
+	dbmap := &amp;gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
+
+	utils.CheckErr(err, &quot;sql.Open failed&quot;)
+	//dbmap.TraceOn(&quot;[gorp]&quot;, log.New(os.Stdout, &quot;reddit:&quot;, log.Lmicroseconds)) //uncomment to log the sql queries
+	dbmap.AddTableWithName(RedditorSubsComments{}, &quot;redditors_comments&quot;)
+	dbmap.AddTableWithName(SimilarityComments{}, &quot;similarity_comments&quot;)
+	return dbmap
+}
+
+func calculateSimilarity(subs []string, n_operators int) {
+	lenSlice := int(len(subs) / n_operators)
+	var start int
+	var end int
+	var wg sync.WaitGroup
+	for op := 0; op &lt; n_operators; op++ {
+		start = op * lenSlice
+		end = (op + 1) * lenSlice
+		wg.Add(1)
+		go calculateSliceSimilarity(subs, start, end, &amp;wg)
+	}
+	wg.Wait()
+}
+func calculateSliceSimilarity(subs []string, start int, end int, wg *sync.WaitGroup) {
+	/* sort subs
+		n processors
+		each procesor process lenSplice = len(subs) / n_processors
+		each processor process subs[i*lenSplice:(i+1)*lenSplice]
+	        for each sub:
+		    calculate similarity of that sub and those after it
+	*/
+	dbmap := InitDb()
+	defer dbmap.Db.Close()
+	lenSubs := len(subs)
+	for i := start; i &lt; end; i++ {
+		for j := i + 1; j &lt; lenSubs; j++ {
+			calculateSubsSimilarity(subs[i], subs[j], dbmap)
+		}
+	}
+	wg.Done()
+}
+
+func calculateSubsSimilarity(sub1 string, sub2 string, dbmap *gorp.DbMap) {
+	var count_union []int
+	var count_intersection []int
+	var union int
+	var intersection int
+	var similarity float64
+	query := &quot;Select count(distinct(redditor)) from redditors_comments where sub ='&quot; + sub1 +
+		&quot;' or sub ='&quot; + sub2 + &quot;';&quot;
+	_, err := dbmap.Select(&amp;count_intersection, query)
+	utils.CheckErr(err, &quot;Error on subsimilarity union&quot;)
+	intersection = count_intersection[0]
+
+	query = &quot;select count(distinct(redditor)) from redditors_comments where sub='&quot; +
+		sub1 + &quot;' and redditor in (select distinct(redditor) from redditors_comments where sub='&quot; + sub2 + &quot;');&quot;
+
+	_, err = dbmap.Select(&amp;count_union, query)
+	utils.CheckErr(err, &quot;Error on subsimilarity intersection&quot;)
+	union = count_union[0]
+	similarity = float64(union) / float64(intersection)
+	s := &amp;SimilarityComments{sub1, sub2, similarity}
+	err = dbmap.Insert(s)
+	utils.CheckErr(err, &quot;Error inserting similarity&quot;)
+}
+</code></pre>
+
+<p>This script will take several hours to finish (on my 2 years old laptop it took 3 complete days).</p>
+
+<p>If you are using Postgresql like me, you might need to modify your posgres.conf file to increase the maximum number of connections.
+<hr></p>
+
+<p>Once the similarity calculation is done, we will know how similar each one of Reddit top subreddits to each other.</p>
+
+<p>Good thing of this implementation is, you can continue running it while your application is in production, so the algorithm gets better with every new user information that gets to the database.</p>
+
+<p>Here is the list of the top pairs of subreddits in terms of Similarity:
+<p></p>
+
+<table border="1" align="center" style="text-align: center;">
+  <thead>
+    <tr>
+      <th>sub1</th>
+      <th>sub2</th>
+      <th>similarity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>iOSthemes</td>
+      <td>jailbreak</td>
+      <td>0.142020815264527</td>
+    </tr>
+    <tr>
+      <td>asktransgender</td>
+      <td>transgender</td>
+      <td>0.112781954887218</td>
+    </tr>
+    <tr>
+      <td>aviation</td>
+      <td>flying</td>
+      <td>0.101759227319765</td>
+    </tr>
+        <tr>
+      <td>ukpolitics</td>
+      <td>unitedkingdom</td>
+      <td>0.101730688054031</td>
+    </tr>
+    <tr>
+      <td>Liberal</td>
+      <td>progressive</td>
+      <td>0.0998427672955975</td>
+    </tr>
+    <tr>
+      <td>keto</td>
+      <td>ketorecipes</td>
+      <td>0.0974065138721351</td>
+    </tr>
+        <tr>
+      <td>Pokemongiveaway</td>
+      <td>pokemontrades</td>
+      <td>0.0894308943089431</td>
+    </tr>
+        <tr>
+      <td>ImaginaryCharacters</td>
+      <td>ImaginaryMonsters</td>
+      <td>0.088479809976247</td>
+    </tr>
+    <tr>
+      <td>frugalmalefashion</td>
+      <td>malefashionadvice</td>
+      <td>0.0846720846720847</td>
+    </tr>
+    <tr>
+      <td>GiftofGames</td>
+      <td>RandomActsOfGaming</td>
+      <td>0.0812588069516205</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><p>
+By observing the table with the most similar subreddits, we can see that the similarity calculations have some relevancy, all of the pairs of subreddits are very very similar to each other.</p>
+
+<p>Another interesting analysis we could do would be to display which subreddits are more similar to a specific one.</p>
+
+<p>For example, here are the most similar subreddits to the subreddit <a href="http://www.reddit.com/r/beer/" target="_blank">/r/beer</a>:
+<p>
+<table border="1" align="center" style="text-align: center;">
+  <thead>
+    <tr>
+      <th>sub</th>
+      <th>similarity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>beerporn</td>
+      <td>0.0723035554227667</td>
+    </tr>
+    <tr>
+      <td>Homebrewing</td>
+      <td>0.0376598768356229</td>
+    </tr>
+    <tr>
+      <td>cocktails</td>
+      <td>0.0122950819672131</td>
+    </tr>
+        <tr>
+      <td>wine</td>
+      <td>0.0110444935310824</td>
+    </tr>
+    <tr>
+      <td>bourbon</td>
+      <td>0.0105506099571382</td>
+    </tr>
+    <tr>
+      <td>newjersey</td>
+      <td>0.0103806228373702</td>
+    </tr>
+        <tr>
+      <td>drunk</td>
+      <td>0.0100190839694656</td>
+    </tr>
+        <tr>
+      <td>showerbeer</td>
+      <td>0.00997719498289624</td>
+    </tr>
+    <tr>
+      <td>Cooking</td>
+      <td>0.00884573894282632</td>
+    </tr>
+    <tr>
+      <td>Coffee</td>
+      <td>0.008186852877438</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+Pretty decent results, we see how the most similar subreddits to the /r/beer sub are alcoholic/food related, and for some reason, <a href="http://www.reddit.com/r/newjersey/" target="_blank">/r/newjersey</a>.
+<hr></p>
+
+<p>Now, the last step to figure out is, <em>how can we recommend Subreddits to a Redditor?</em>.</p>
+
+<p>Very easy. Given a Redditor <code>r</code> with a set of subreddits he/she likes <code>[sub1,sub2,...]</code> ,
+we can sum the similarity of each subreddit on the dataset with each subreddit that redditor likes.</p>
+
+<p>so on this example, <code>r1</code> likes  <code>[sub1,sub2,...]</code>, so we compute the most similar subreddits to  <code>[sub1,sub2,...]</code>:</p>
+
+<p><strong>For sub1:</strong>
+<table border="1" style="text-align: center;">
+  <tbody>
+  <tr>
+      <td>sub1 </td>
+      <td>sub2 </td>
+      <td>sim1-3 </td>
+  </tr>
+  <tr>
+      <td>sub1 </td>
+      <td>sub4 </td>
+      <td>sim1-4 </td>
+  </tr>
+  <tr>
+      <td>sub1</td>
+      <td>sub5</td>
+      <td>sim1-5</td>
+  </tr>
+    <tr>
+      <td>sub1</td>
+      <td>&hellip;</td>
+      <td>&hellip;</td>
+  </tr>
+  </tbody>
+</table>
+<p>
+<strong>For sub2:</strong>
+<table border="1" style="text-align: center;">
+  <tbody>
+  <tr>
+      <td>sub2</td>
+      <td>sub3</td>
+      <td>sim2-3 </td>
+  </tr>
+  <tr>
+      <td>sub2</td>
+      <td>sub4</td>
+      <td>sim2-4</td>
+  </tr>
+  <tr>
+      <td>sub2</td>
+      <td>sub5</td>
+      <td>sim2-5</td>
+  </tr>
+      <tr>
+      <td>sub2</td>
+      <td>&hellip;</td>
+      <td>&hellip;</td>
+  </tr>
+  </tbody>
+</table>
+<p></p>
+
+<p>we continue calculating this subtables for each Subreddit that <code>r1</code> likes.
+Note that we don&rsquo;t calculate <code>sim1-2</code> because sub1 and sub2 are already liked by <code>r1</code>.</p>
+
+<p>Now, we calculate the similarity of each Subreddit <em>with the Redditor <code>r1</code></em>:</p>
+
+<pre><code>sim3-r1 = sim1-3 + sim2-3 ...
+sim4-r1 = sim1-4 + sim2-4 ...
+sim5-r1 = sim1-5 + sim2-5 ...
+...
+</code></pre>
+
+<p>We now have the similarity of each Subreddit with Redditor <code>r1</code>.</p>
+
+<p>Last step it&rsquo;s just returning to the user the top <em>N</em> subreddits sorted by this similarities.</p>
+
+<p>So now we can say <strong>we have built a similarity engine. Oh yeah!</strong></p>
+
+<p>On the <a href="http://blog.manugarri.com/building-a-recommendation-engine-for-reddit-part-4/" target="_blank">next (and final) part</a> I will talk about how to use the similarity engine on a live Web Application.</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

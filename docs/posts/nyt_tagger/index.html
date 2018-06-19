@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Modifying NYT ingredient tagger to a sole python implementation | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">May 5, 2016</h2>
+    <h1 class="title">Modifying NYT ingredient tagger to a sole python implementation</h1>
+    
+    <div class="content">
+      <p><strong>NOTE:</strong> This is a jupyter notebook converted to markdown. As such, it does not look quite good. The original notebook can be seen <a href="https://gist.github.com/manugarri/0fdd4e52f074d61d633ca23eee6da052" target="_blank">here</a>.</p>
+
+<p><style type="text/css">
+.highlight{background: # f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .1em;padding:0em .5em;border-radius: 4px;}
+.k{color: # 338822; font-weight: bold;}
+.kn{color: # 338822; font-weight: bold;}
+.mi{color: # 000000;}
+.o{color: # 000000;}
+.ow{color: # BA22FF;  font-weight: bold;}
+.nb{color: # 338822;}
+.n{color: # 000000;}
+.s{color: # cc2222;}
+.se{color: # cc2222; font-weight: bold;}
+.si{color: # C06688; font-weight: bold;}
+.nn{color: # 4D00FF; font-weight: bold;}
+</style>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> watermark
+<span class="o">%</span><span class="k">watermark</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>2016-05-05T15:37:46
+
+CPython 2.7.11
+IPython 4.0.3
+
+compiler   : GCC 4.4.7 20120313 (Red Hat 4.4.7-1)
+system     : Linux
+release    : 3.19.0-58-generic
+machine    : x86_64
+processor  : x86_64
+CPU cores  : 8
+interpreter: 64bit
+</pre>
+</div>
+</div>
+
+<p></div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is a notebook showing a modification of the original <a href="https://github.com/NYTimes/ingredient-phrase-tagger">NYT Ingredient Phrase tagger</a>. <a href="http://open.blogs.nytimes.com/2016/04/27/structured-ingredients-data-tagging/">Here</a> is the article where they talk about it.</p>
+<p>That github repository contains New York Time&rsquo;s tool for performing Named Entity Recognition via Conditional Random Fields on food recipes to extract the ingredients used on those recipes as well as the quantities.</p>
+<p>On their implementation they use a <a href="https://taku910.github.io/crfpp/">CRF++</a> as the extractor.</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here I will use pycrfsuite instead of CRF++, the main reasons being:</p>
+<ul>
+<li><p>by using a full python solution (even though pycrfsuite is just a wrapper around <a href="http://www.chokkan.org/software/crfsuite/">crfsuite</a>) we can deploy the model more easily, and</p>
+</li>
+<li><p>installing CRF++ proved to be a challenge in Ubuntu 14.04</p>
+</li>
+</ul>
+<p>You can install pycrfsuite by doing:</p>
+<p><code>pip install python-crfsuite</code></p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We load the train_file with features produced by calling <em>(as it appears on the README)</em>:</p></p>
+
+<pre><code>bin/generate_data --data-path=input.csv --count=180000 --offset=0 &gt; tmp/train_file</code></pre>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span></p>
+
+<p><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">pycrfsuite</span></p>
+
+<p><span class="kn">from</span> <span class="nn">lib.training</span> <span class="kn">import</span> <span class="n">utils</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&amp;# 39;tmp/train_file&amp;# 39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fname</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&amp;# 39;</span><span class="se">\n</span><span class="s1">&amp;# 39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&amp;# 39;</span><span class="se">\t</span><span class="s1">&amp;# 39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">==</span><span class="mi">6</span><span class="p">]</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">items</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&apos;1$1/4&apos;, &apos;I1&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;B-QTY&apos;],
+ [&apos;cups&apos;, &apos;I2&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;B-UNIT&apos;],
+ [&apos;cooked&apos;, &apos;I3&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;B-COMMENT&apos;],
+ [&apos;and&apos;, &apos;I4&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;I-COMMENT&apos;],
+ [&apos;pureed&apos;, &apos;I5&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;I-COMMENT&apos;],
+ [&apos;fresh&apos;, &apos;I6&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;I-COMMENT&apos;],
+ [&apos;butternut&apos;, &apos;I7&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;B-NAME&apos;],
+ [&apos;squash&apos;, &apos;I8&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;I-NAME&apos;],
+ [&apos;,&apos;, &apos;I9&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;OTHER&apos;],
+ [&apos;or&apos;, &apos;I10&apos;, &apos;L20&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;, &apos;I-COMMENT&apos;]]</pre>
+</div>
+
+<p></div></p>
+
+<p></div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see, each line of the train_file follows the format:</p>
+<ul>
+<li>token</li>
+<li>position on the phrase. (I1 would be first word, I2 the second, and so on)</li>
+<li>LX , being the length group of the token (defined by <a href="https://github.com/NYTimes/ingredient-phrase-tagger/blob/master/lib/training/utils.py# L140">LengthGroup</a>)</li>
+<li>NoCAP or YesCAP, whether the token is capitalized or not</li>
+<li>YesParen or NoParen, whether the token is inside parenthesis or not</li>
+</ul></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>PyCRFSuite expects the input to be a list of the structured items and their respective tags. So we process the items from the train file and bucket them into sentences</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span></p>
+
+<p><span class="n">sent</span> <span class="o">=</span> <span class="p">[</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="k">if</span> <span class="s1">&amp;# 39;I1&amp;# 39;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+        <span class="n">sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>177029</pre>
+</div>
+
+<p></div></p>
+
+<p></div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">data_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></p>
+
+<p><span class="n">test_data</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">test_size</span><span class="o"><em></span><span class="n">data_size</span><span class="p">)]</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">test_size</span><span class="o"></em></span><span class="n">data_size</span><span class="p">):]</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">sent2labels</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">]</span></p>
+
+<p><span class="k">def</span> <span class="nf">sent2features</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">word</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">]</span></p>
+
+<p><span class="k">def</span> <span class="nf">sent2tokens</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">]</span></p>
+
+<p><span class="n">y_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">sent2labels</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">train_data</span><span class="p">]</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">sent2features</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">train_data</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&apos;Orange&apos;, &apos;I1&apos;, &apos;L8&apos;, &apos;YesCAP&apos;, &apos;NoPAREN&apos;],
+ [&apos;peel&apos;, &apos;I2&apos;, &apos;L8&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;],
+ [&apos;,&apos;, &apos;I3&apos;, &apos;L8&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;],
+ [&apos;sliced.&apos;, &apos;I4&apos;, &apos;L8&apos;, &apos;NoCAP&apos;, &apos;NoPAREN&apos;]]</pre>
+</div>
+
+<p></div></p>
+
+<p></div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We set up the CRF trainer. We will use the default values and include all the possible joint features</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">pycrfsuite</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span></p>
+
+<p><span class="k">for</span> <span class="n">xseq</span><span class="p">,</span> <span class="n">yseq</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+    <span class="n">trainer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xseq</span><span class="p">,</span> <span class="n">yseq</span><span class="p">)</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I obtained the following hyperparameters by performing a GridSearchCV with the scikit learn implementation of pycrfsuite.</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span>
+<span class="p">{</span>
+        <span class="s1">&amp;# 39;c1&amp;# 39;</span><span class="p">:</span> <span class="mf">0.43</span><span class="p">,</span>
+        <span class="s1">&amp;# 39;c2&amp;# 39;</span><span class="p">:</span> <span class="mf">0.012</span><span class="p">,</span>
+        <span class="s1">&amp;# 39;max_iterations&amp;# 39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&amp;# 39;feature.possible_transitions&amp;# 39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="s1">&amp;# 39;feature.possible_states&amp;# 39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="s1">&amp;# 39;linesearch&amp;# 39;</span><span class="p">:</span> <span class="s1">&amp;# 39;StrongBacktracking&amp;# 39;</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We train the model (this might take a while)</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="s1">&amp;# 39;tmp/trained_pycrfsuite&amp;# 39;</span><span class="p">)</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we have a pretrained model that we can just deploy</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">tagger</span> <span class="o">=</span> <span class="n">pycrfsuite</span><span class="o">.</span><span class="n">Tagger</span><span class="p">()</span>
+<span class="n">tagger</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&amp;# 39;tmp/trained_pycrfsuite&amp;# 39;</span><span class="p">)</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[35]:</div>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;contextlib.closing at 0x7f2984586990&gt;</pre>
+</div>
+
+<p></div></p>
+
+<p></div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we just add a wrapper function for the script found in <strong>lib/testing/convert_to_json.py</strong> and create a convient way to parse an ingredient sentence</p></p>
+
+<p></div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">lib.training</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">punctuation</span></p>
+
+<p><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">PunktSentenceTokenizer</span></p>
+
+<p><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">PunktSentenceTokenizer</span><span class="p">()</span></p>
+
+<p><span class="k">def</span> <span class="nf">get_sentence_features</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets  the features of the sentence&quot;&quot;&quot;</span>
+    <span class="n">sent_tokens</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">cleanUnicodeFractions</span><span class="p">(</span><span class="n">sent</span><span class="p">))</span></p>
+
+<pre><code>&lt;span class=&quot;n&quot;&gt;sent_features&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sent_tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;token_features&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;token_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getFeatures&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sent_tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sent_features&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token_features&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sent_features&lt;/span&gt;
+</code></pre>
+
+<p><span class="k">def</span> <span class="nf">format_ingredient_output</span><span class="p">(</span><span class="n">tagger_output</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Formats the tagger output into a more convenient dictionary&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[{}]</span>
+    <span class="n">display</span> <span class="o">=</span> <span class="p">[[]]</span>
+    <span class="n">prevTag</span> <span class="o">=</span> <span class="bp">None</span></p>
+
+<pre><code>&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tagger_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# turn B-NAME/123 back into &amp;quot;name&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;r&amp;# 39;^[BI]\-&amp;# 39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# ---- DISPLAY ----&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# build a structure which groups each token by its tag, so we can&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# rebuild the original display name later.&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prevTag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;prevTag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;#               ^- token&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;#            ^---- tag&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;#        ^-------- ingredient&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;# ---- DATA ----&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# build a dict grouping tokens by their tag&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;# initialize this attribute if this is the first token of its kind&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# HACK: If this token is a unit, singularize it so Scoop accepts it.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;unit&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;singularize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# reassemble the output into a list of dicts.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;smartJoin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ingredient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iteritems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()])&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ingredient&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ingredient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Add the raw ingredient phrase&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;input&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;utils&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;smartJoin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
+</code></pre>
+
+<p><span class="k">def</span> <span class="nf">parse_ingredient</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ingredient parsing logic&quot;&quot;&quot;</span>
+    <span class="n">sentence_features</span> <span class="o">=</span> <span class="n">get_sentence_features</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="n">sentence_features</span><span class="p">)</span>
+    <span class="n">tagger_output</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sent2tokens</span><span class="p">(</span><span class="n">sentence_features</span><span class="p">),</span> <span class="n">tags</span><span class="p">)</span>
+    <span class="n">parsed_ingredient</span> <span class="o">=</span>  <span class="n">format_ingredient_output</span><span class="p">(</span><span class="n">tagger_output</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">parsed_ingredient</span><span class="p">:</span>
+        <span class="n">parsed_ingredient</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&amp;# 39;name&amp;# 39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parsed_ingredient</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&amp;# 39;name&amp;# 39;</span><span class="p">,</span><span class="s1">&amp;# 39;&amp;# 39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&amp;# 39;.&amp;# 39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parsed_ingredient</span></p>
+
+<p><span class="k">def</span> <span class="nf">parse_recipe_ingredients</span><span class="p">(</span><span class="n">ingredient_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper around parse_ingredient so we can call it on an ingredient list&quot;&quot;&quot;</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span><span class="n">sent</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&amp;# 39;</span><span class="se">\n</span><span class="s1">&amp;# 39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">]</span>
+    <span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+        <span class="n">ingredients</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parse_ingredient</span><span class="p">(</span><span class="n">sent</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ingredients</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<p></div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="s1">&amp;# 39;&amp;# 39;&amp;# 39;</span>
+<span class="s1">2 <sup>1</sup>&frasl;<sub>4</sub> cups all-purpose flour.</span>
+<span class="s1"><sup>1</sup>&frasl;<sub>2</sub> teaspoon baking soda.</span>
+<span class="s1">1 cup (2 sticks) unsalted butter, room temperature.</span>
+<span class="s1"><sup>1</sup>&frasl;<sub>2</sub> cup granulated sugar.</span>
+<span class="s1">1 cup packed light-brown sugar.</span>
+<span class="s1">1 teaspoon salt.</span>
+<span class="s1">2 teaspoons pure vanilla extract.</span>
+<span class="s1">2 large eggs.</span>
+<span class="s1">2 cups (about 12 ounces) semisweet and/or milk chocolate chips.</span>
+<span class="s1">&amp;# 39;&amp;# 39;&amp;# 39;</span></p>
+
+<p><span class="n">parse_recipe_ingredients</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div></p>
+
+<p></div>
+</div>
+</div></p>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[39]:</div>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[{&apos;input&apos;: u&apos;2$1/4 cups all-purpose flour.&apos;,
+  &apos;name&apos;: u&apos;all-purpose flour&apos;,
+  &apos;qty&apos;: u&apos;2$1/4&apos;,
+  &apos;unit&apos;: u&apos;cup&apos;},
+ {&apos;input&apos;: u&apos;1/2 teaspoon baking soda.&apos;,
+  &apos;name&apos;: u&apos;baking&apos;,
+  &apos;other&apos;: u&apos;soda.&apos;,
+  &apos;qty&apos;: u&apos;1/2&apos;,
+  &apos;unit&apos;: u&apos;teaspoon&apos;},
+ {&apos;comment&apos;: u&apos;(2 sticks)&apos;,
+  &apos;input&apos;: u&apos;1 cup (2 sticks) unsalted butter, room temperature.&apos;,
+  &apos;name&apos;: u&apos;unsalted butter&apos;,
+  &apos;other&apos;: u&apos;, room temperature.&apos;,
+  &apos;qty&apos;: u&apos;1&apos;,
+  &apos;unit&apos;: u&apos;cup&apos;},
+ {&apos;input&apos;: u&apos;1/2 cup granulated sugar.&apos;,
+  &apos;name&apos;: u&apos;granulated sugar&apos;,
+  &apos;qty&apos;: u&apos;1/2&apos;,
+  &apos;unit&apos;: u&apos;cup&apos;},
+ {&apos;comment&apos;: u&apos;packed&apos;,
+  &apos;input&apos;: u&apos;1 cup packed light-brown sugar.&apos;,
+  &apos;name&apos;: &apos;&apos;,
+  &apos;other&apos;: u&apos;light-brown sugar.&apos;,
+  &apos;qty&apos;: u&apos;1&apos;,
+  &apos;unit&apos;: u&apos;cup&apos;},
+ {&apos;input&apos;: u&apos;1 teaspoon salt.&apos;,
+  &apos;name&apos;: &apos;&apos;,
+  &apos;other&apos;: u&apos;salt.&apos;,
+  &apos;qty&apos;: u&apos;1&apos;,
+  &apos;unit&apos;: u&apos;teaspoon&apos;},
+ {&apos;comment&apos;: u&apos;pure&apos;,
+  &apos;input&apos;: u&apos;2 teaspoons pure vanilla extract.&apos;,
+  &apos;name&apos;: u&apos;vanilla&apos;,
+  &apos;other&apos;: u&apos;extract.&apos;,
+  &apos;qty&apos;: u&apos;2&apos;,
+  &apos;unit&apos;: u&apos;teaspoon&apos;},
+ {&apos;comment&apos;: u&apos;large&apos;,
+  &apos;input&apos;: u&apos;2 large eggs.&apos;,
+  &apos;name&apos;: u&apos;eggs&apos;,
+  &apos;qty&apos;: u&apos;2&apos;},
+ {&apos;comment&apos;: u&apos;(about 12 ounces) semisweet and/or&apos;,
+  &apos;input&apos;: u&apos;2 cups (about 12 ounces) semisweet and/or milk chocolate chips.&apos;,
+  &apos;name&apos;: u&apos;milk chocolate chips&apos;,
+  &apos;qty&apos;: u&apos;2&apos;,
+  &apos;unit&apos;: u&apos;cup&apos;}]</pre>
+</div>
+
+<p></div></p>
+
+<p></div>
+</div></p>
+
+<p></div></p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

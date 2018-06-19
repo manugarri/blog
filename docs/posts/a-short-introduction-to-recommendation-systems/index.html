@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>A short introduction to Recommendation Systems | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">December 5, 2015</h2>
+    <h1 class="title">A short introduction to Recommendation Systems</h1>
+    
+    <div class="content">
+      
+
+<p>In this tutorial, we will dive into recommendation systems.</p>
+
+<p>You might not know what recommendation systems are but you see them everywhere on the internet.</p>
+
+<p><img src="http://www.getvero.com/wp-content/uploads/2013/02/amazon-recommendations.jpeg" alt="amazon" /></p>
+
+<p>Everytime you shop on Amazon and you see related products&hellip;</p>
+
+<p><img src="http://core0.staticworld.net/images/article/2015/03/netflixpregodmode-100574324-orig.png" alt="netflix" /></p>
+
+<p>Or when Netflix recommends you something interesting to watch&hellip;</p>
+
+<p>The purpose of a recommendation system is to predict a rating that a user will give to an item that they have not yet rated.</p>
+
+<p>This rating is produced by analyzing either item characteristics or other user/item ratings (or both) to provide personalized recommendations to users.</p>
+
+<p>There are 2 main approaches to recommendation systems:</p>
+
+<ul>
+<li>Content Filtering. Recommendations depend on item characteristics.</li>
+<li>Collaborative Filtering. Recommendations depend on user-item ratings.</li>
+</ul>
+
+<p>In this tutorial we will work with the <a href="http://grouplens.org/datasets/movielens/" target="_blank">MovieLens Dataset</a>. This dataset contains user generated movie ratings from the website MovieLens (<a href="https://movielens.org/" target="_blank">https://movielens.org/</a>).</p>
+
+<p>It contains multiple files, but the ones we will use in this tutorial will be <em>movies.dat</em> and <em>ratings.dat</em>.</p>
+
+<p>First we will download the dataset:</p>
+
+<pre><code>wget http://files.grouplens.org/datasets/movielens/ml-1m.zip
+unzip ml-1m.zip
+cd ml-1m/
+</code></pre>
+
+<h1 id="content-filtering">Content Filtering</h1>
+
+<p>Here are the first rows of the movies.dat file. The file follows the format:</p>
+
+<p><strong>movie_id::movie_title::movie genre(s)</strong></p>
+
+<pre><code>head movies.dat
+
+1::Toy Story (1995)::Animation|Children's|Comedy
+2::Jumanji (1995)::Adventure|Children's|Fantasy
+3::Grumpier Old Men (1995)::Comedy|Romance
+4::Waiting to Exhale (1995)::Comedy|Drama
+5::Father of the Bride Part II (1995)::Comedy
+6::Heat (1995)::Action|Crime|Thriller
+7::Sabrina (1995)::Comedy|Romance
+8::Tom and Huck (1995)::Adventure|Children's
+9::Sudden Death (1995)::Action
+10::GoldenEye (1995)::Action|Adventure|Thriller
+</code></pre>
+
+<p>With genres being separated by a pipe <em>|</em>.</p>
+
+<p>We load now the movies file:</p>
+
+<pre><code class="language-prettyprint">import pandas as pd
+import numpy as np
+movies_df = pd.read_table('movies.dat', header=None, sep='::', names=['movie_id', 'movie_title', 'movie_genre'])
+
+movies_df.head()
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<table border="1" style="text-align: center; width:100%;">
+  <thead>
+    <tr">
+      <th></th>
+      <th>movie_id</th>
+      <th>movie_title</th>
+      <th>movie_genre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Toy Story (1995)</td>
+      <td>Animation|Children&rsquo;s|Comedy</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Jumanji (1995)</td>
+      <td>Adventure|Children&rsquo;s|Fantasy</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Grumpier Old Men (1995)</td>
+      <td>Comedy|Romance</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Waiting to Exhale (1995)</td>
+      <td>Comedy|Drama
+    </tr>
+  </tbody>
+</table></p>
+
+<p>In order to be able to work with the movie_genre column, we need to transform it to what is called <strong>&ldquo;dummy variables&rdquo;</strong>.</p>
+
+<p>This is a way to convert a categorical variable (e.g. Animation, Comedy, Romance&hellip;), into multiple columns (one column named Action, one named Comedy, etc).</p>
+
+<p>For each movie, these dummy columns will have a value of 0 except for those genres the movie has.</p>
+
+<pre><code class="language-prettyprint">
+# we convert the movie genres to a set of dummy variables 
+movies_df = pd.concat([movies_df, movies_df.movie_genre.str.get_dummies(sep='|')], axis=1)
+movies_df.head()
+</code></pre>
+
+<p><strong>Out[]:</strong></p>
+
+<table border="1" style="text-align: center; width:100%;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>movie_id</th>
+      <th>movie_title</th>
+      <th>movie_genre</th>
+      <th>Action</th>
+      <th>Adventure</th>
+      <th>Animation</th>
+      <th>Children's</th>
+      <th>Comedy</th>
+      <th>Crime</th>
+      <th>Documentary</th>
+      <th>...</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Toy Story (1995)</td>
+      <td>Animation|Children's|Comedy</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Jumanji (1995)</td>
+      <td>Adventure|Children's|Fantasy</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Grumpier Old Men (1995)</td>
+      <td>Comedy|Romance</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Waiting to Exhale (1995)</td>
+      <td>Comedy|Drama</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Father of the Bride Part II (1995)</td>
+      <td>Comedy</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>So for example, the movie with an <em>id</em> of 1 Toy Story, belongs to the genres <em>Animation, Children&rsquo;s and Comedy</em>, and thus the columns <em>Animation, Children&rsquo;s and Comedy</em> have a value of 1.</p>
+
+<pre><code class="language-prettyprint">movie_categories = movies_df.columns[3:]
+movies_df.loc[0]
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<div class="output_text output_subarea output_execute_result">
+<pre>movie_id                                 1
+movie_title               Toy Story (1995)
+movie_genre    Animation|Children&apos;s|Comedy
+Action                                   0
+Adventure                                0
+Animation                                1
+Children&apos;s                               1
+Comedy                                   1
+Crime                                    0
+Documentary                              0
+Drama                                    0
+Fantasy                                  0
+Film-Noir                                0
+Horror                                   0
+Musical                                  0
+Mystery                                  0
+Romance                                  0
+Sci-Fi                                   0
+Thriller                                 0
+War                                      0
+Western                                  0
+Name: 0, dtype: object</pre>
+</div></p>
+
+<p>Content filtering is a simple way to build a recommendation system. Here, items (in this example movies) are mapped to a set of features (genres).</p>
+
+<p>To recommend a user an item, first that user has to provide his/her preferences regarding those features.</p>
+
+<p>So in this example, the user has to tell the system how much does he or she like each movie genre.</p>
+
+<p>Right now we have all the movies mapped into genres. We just need to create a user and map that user into those genres.</p>
+
+<p>Let&rsquo;s create a user with strong preference for action, adventure and fiction movies.</p>
+
+<pre><code class="language-prettyprint">from collections import OrderedDict
+
+
+user_preferences = OrderedDict(zip(movie_categories, []))
+
+user_preferences['Action'] = 5
+user_preferences['Adventure'] = 5
+user_preferences['Animation'] = 1
+user_preferences[&quot;Children's&quot;] = 1
+user_preferences[&quot;Comedy&quot;] = 3
+user_preferences['Crime'] = 2
+user_preferences['Documentary'] = 1
+user_preferences['Drama'] = 1
+user_preferences['Fantasy'] = 5
+user_preferences['Film-Noir'] = 1
+user_preferences['Horror'] = 2
+user_preferences['Musical'] = 1
+user_preferences['Mystery'] = 3
+user_preferences['Romance'] = 1
+user_preferences['Sci-Fi'] = 5
+user_preferences['War'] = 3
+user_preferences['Thriller'] = 2
+user_preferences['Western'] =1
+</code></pre>
+
+<p>Once we have users with their movie genre preferences and the movies mapped into genres, to compute the score of a movie for a specific user, we just need to calculate the dot product of that movie genre vector with that user preferences vector.</p>
+
+<pre><code class="language-prettyprint"># in production you would use np.dot instead of writing your own dot product function.
+def dot_product(vector_1, vector_2):
+    return sum([ i*j for i,j in zip(vector_1, vector_2)])
+
+def get_movie_score(movie_features, user_preferences):
+    return dot_product(movie_features, user_preferences)
+</code></pre>
+
+<p>Let&rsquo;s compute the score of the movie <em>&lsquo;Toy Story&rsquo;</em> (a children&rsquo;s animation movie) for the sample user.</p>
+
+<pre><code class="language-prettyprint">toy_story_features = movies_df.loc[0][movie_categories]
+toy_story_features
+</code></pre>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Action         0
+Adventure      0
+Animation      1
+Children&apos;s     1
+Comedy         1
+Crime          0
+Documentary    0
+Drama          0
+Fantasy        0
+Film-Noir      0
+Horror         0
+Musical        0
+Mystery        0
+Romance        0
+Sci-Fi         0
+Thriller       0
+War            0
+Western        0
+Name: 0, dtype: object</pre>
+</div>
+
+<pre><code class="language-prettyprint">toy_story_user_predicted_score = dot_product(toy_story_features, user_preferences.values())
+toy_story_user_predicted_score
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<pre>5</pre></p>
+
+<p>So for the user, Toy Story, has a score of 5. Which does not mean much by itself, but helps us comparing how good of a recommendation Toy Story is compared to other movies.</p>
+
+<p>Let&rsquo;s calculate the score for Die Hard (a thrilling action movie):</p>
+
+<pre><code class="language-prettyprint">movies_df[movies_df.movie_title.str.contains('Die Hard')]
+</code></pre>
+
+<table border="1" style="text-align: center; width:100%;">
+  <thead>
+    <tr">
+      <th></th>
+      <th>movie_id</th>
+      <th>movie_title</th>
+      <th>movie_genre</th>
+      <th>Action</th>
+      <th>Adventure</th>
+      <th>Animation</th>
+      <th>Children's</th>
+      <th>Comedy</th>
+      <th>Crime</th>
+      <th>Documentary</th>
+      <th>...</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>163</th>
+      <td>165</td>
+      <td>Die Hard: With a Vengeance (1995)</td>
+      <td>Action|Thriller</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1023</th>
+      <td>1036</td>
+      <td>Die Hard (1988)</td>
+      <td>Action|Thriller</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1349</th>
+      <td>1370</td>
+      <td>Die Hard 2 (1990)</td>
+      <td>Action|Thriller</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre><code class="language-prettyprint">die_hard_id = 1036
+die_hard_features = movies_df[movies_df.movie_id==die_hard_id][movie_categories]
+die_hard_features.T 
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<table border="1" style="text-align: center;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>1023</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Action</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Adventure</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Animation</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Children&rsquo;s</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Comedy</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Crime</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Documentary</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Drama</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Fantasy</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Film-Noir</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Horror</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Musical</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Mystery</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Romance</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Sci-Fi</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Thriller</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>War</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Western</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></p>
+
+<p><em>note, 1023 is the dataframe row index for Die Hard, not the movie index in the movielens dataset</em></p>
+
+<pre><code class="language-prettyprint">die_hard_user_predicted_score = dot_product(die_hard_features.values[0], user_preferences.values())
+die_hard_user_predicted_score
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<pre>8</pre></p>
+
+<p>So we see that Die Hard gets an score of 8 vs a 5 for Toy Story. So Die Hard would be recommended before Toy Story. Which makes sense, given this user&rsquo;s preferences are skewed towards action packed movies.</p>
+
+<p>Once we know how to calculate the score for one movie, providing movie recommendations for the user is as easy as calculating the score for all the movies and returning those with the highest scores.</p>
+
+<pre><code class="language-prettyprint">def get_movie_recommendations(user_preferences, n_recommendations):
+    # we add a column to the movies_df dataset with the calculated score for each movie for the given user
+    movies_df['score'] = movies_df[movie_categories].apply(get_movie_score, 
+                                                           args=([user_preferences.values()]), axis=1)
+    return movies_df.sort_values(by=['score'], ascending=False)['movie_title'][:n_recommendations]
+    
+get_movie_recommendations(user_preferences, 10)    
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<div class="output_text output_subarea output_execute_result">
+<pre>2253                                       Soldier (1998)
+257             Star Wars: Episode IV - A New Hope (1977)
+2036                                          Tron (1982)
+1197                              Army of Darkness (1993)
+2559     Star Wars: Episode I - The Phantom Menace (1999)
+1985                      Honey, I Shrunk the Kids (1989)
+1192    Star Wars: Episode VI - Return of the Jedi (1983)
+1111                                    Abyss, The (1989)
+1848                                    Armageddon (1998)
+2847                                  Total Recall (1990)
+Name: movie_title, dtype: object</pre>
+</div></p>
+
+<p>So the system recommends heavy action and scifi movies. Neat!</p>
+
+<p>Content Filtering makes recommending to a new user very easy. Users just have to express their preferences once. However, Content Filtering shows some caveats:</p>
+
+<ul>
+<li><p>Need to map each item into the feature space. That means that any time a new item gets added, someone has to manually categorize that item.</p></li>
+
+<li><p>Recommendations are limited in scope. This means items can&rsquo;t be categorized in new features.</p></li>
+</ul>
+
+<p>So content filtering is maybe a too simple option nowadays, which leads us to&hellip;:</p>
+
+<h1 id="collaborative-filtering">Collaborative Filtering</h1>
+
+<p>Collaborative filtering is another way of predicting user-item scores. This time though, we will use the existing user-item scores to predict the missing ones.</p>
+
+<p>The assumption is that users get value from recommendations based on other users with similar tastes.</p>
+
+<p>For this example we will use the <em>ratings.dat</em> file. This file follows the format:</p>
+
+<p><strong>user_id::movie_id::rating::timestamp</strong></p>
+
+<pre><code>head ratings.dat
+
+1::1193::5::978300760
+1::661::3::978302109
+1::914::3::978301968
+1::3408::4::978300275
+1::2355::5::978824291
+1::1197::3::978302268
+1::1287::5::978302039
+1::2804::5::978300719
+1::594::4::978302268
+1::919::4::978301368
+</code></pre>
+
+<p>The MovieLens dataset provides us with a file that includes over 1 million movie ratings.</p>
+
+<pre><code class="language-prettyprint">ratings_df = pd.read_table('ratings.dat', header=None, sep='::', names=['user_id', 'movie_id', 'rating', 'timestamp'])
+
+# we dont care about the time the rating was given
+del ratings_df['timestamp']
+
+# replace movie_id with movie_title for legibility
+ratings_df = pd.merge(ratings_df, movies_df, on='movie_id')[['user_id', 'movie_title', 'movie_id','rating']]
+
+ratings_df.head()
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<table border="1" style="text-align: center; width:100%;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>user_id</th>
+      <th>movie_title</th>
+      <th>movie_id</th>
+      <th>rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>One Flew Over the Cuckoo&rsquo;s Nest (1975)</td>
+      <td>1193</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>One Flew Over the Cuckoo&rsquo;s Nest (1975)</td>
+      <td>1193</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12</td>
+      <td>One Flew Over the Cuckoo&rsquo;s Nest (1975)</td>
+      <td>1193</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>15</td>
+      <td>One Flew Over the Cuckoo&rsquo;s Nest (1975)</td>
+      <td>1193</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>17</td>
+      <td>One Flew Over the Cuckoo&rsquo;s Nest (1975)</td>
+      <td>1193</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+The dataset is a matrix of users and movie ratings, so we convert the ratings_df to a matrix with a user per row and a movie per column.</p>
+
+<pre><code class="language-prettyprint">ratings_mtx_df = ratings_df.pivot_table(values='rating', index='user_id', columns='movie_title')
+ratings_mtx_df.fillna(0, inplace=True)
+
+movie_index = ratings_mtx_df.columns
+
+ratings_mtx_df.head()
+</code></pre>
+
+<p><strong>Out[]:</strong></p>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>movie_title</th>
+      <th>$1,000,000 Duck (1971)</th>
+      <th>'Night Mother (1986)</th>
+      <th>'Til There Was You (1997)</th>
+      <th>...</th>
+    </tr>
+    <tr>
+      <th>user_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+  </tr>
+  </tbody>
+</table>
+
+<p>We have a matrix of 6040 users and 3706 movies.</p>
+
+<p>To compute similarities between movies, one way is to find the correlation between movies and then use that correlation to find similar movies to those the users have liked.</p>
+
+<p>An easy way of doing this is in python is by using the <code>numpy.corrcoef</code> function, that calculates the <a href="https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient" target="_blank">Pearson Product Moment Correlation Coefficient (PMCC)</a> between each item pair.
+the PMCC has a value between -1 and 1 that measures the correlation (positive or negative) between two variables.</p>
+
+<p>A correlation matrix is a matrix of m x m shape, where element Mij represents the correlation between item i and item j.</p>
+
+<pre><code class="language-prettyprint">corr_matrix = np.corrcoef(ratings_mtx_df.T)
+corr_matrix.shape
+</code></pre>
+
+<p><strong>Out[]:</strong></p>
+
+<pre><code class="language-prettyprint">(3706, 3706)
+</code></pre>
+
+<p><em>Note: We use the transposed ratings matrix to calculate the correlation matrix so it gives back the correlation between movies (rows). If we used the ratings matrix without transposing it, <code>np.corrcoef</code> would return the correlation</em> <strong>between users</strong>.</p>
+
+<p>Now, if we want to find similar movies to a specific movie, it&rsquo;s just a matter of returning those movies that have a high correlation coefficent with that one.</p>
+
+<pre><code class="language-prettyprint">favoured_movie_title = 'Toy Story (1995)'
+
+favoured_movie_index = list(movie_index).index(favoured_movie_title)
+
+P = corr_matrix[favoured_movie_index]
+
+
+# only return those movies with a high correlation with Toy Story
+list(movie_index[(P&gt;0.4) &amp; (P&lt;1.0)])
+</code></pre>
+
+<p><strong>Out[]:</strong></p>
+
+<pre><code class="language-prettyprint">['Aladdin (1992)',
+ &quot;Bug's Life, A (1998)&quot;,
+ 'Groundhog Day (1993)',
+ 'Lion King, The (1994)',
+ 'Toy Story 2 (1999)']
+</code></pre>
+
+<p>Now to provide recommendations to a user, we take the list of movies that user has rated. Then we sum the correlations of those movies with all the other ones and return a list of those movies sorted by their total correlation with the user.</p>
+
+<pre><code class="language-prettyprint">def get_movie_similarity(movie_title):
+    '''Returns correlation vector for a movie'''
+    movie_idx = list(movie_index).index(movie_title)
+    return corr_matrix[movie_idx]
+
+def get_movie_recommendations(user_movies):
+    '''given a set of movies, it returns all the movies sorted by their correlation with the user'''
+    movie_similarities = np.zeros(corr_matrix.shape[0])
+    for movie_id in user_movies:
+        movie_similarities = movie_similarities + get_movie_similarity(movie_id)
+    similarities_df = pd.DataFrame({
+        'movie_title': movie_index,
+        'sum_similarity': movie_similarities
+        })
+    similarities_df = similarities_df[~(similarities_df.movie_title.isin(user_movies))]
+    similarities_df = similarities_df.sort_values(by=['sum_similarity'], ascending=False)
+    return similarities_df
+</code></pre>
+
+<p>For example, let&rsquo;s select a user with a preference for kid&rsquo;s movies, and some action movies.</p>
+
+<pre><code class="language-prettyprint">sample_user = 21
+ratings_df[ratings_df.user_id==sample_user].sort_values(by=['rating'], ascending=False)
+</code></pre>
+
+<p><strong>Out[]:</strong></p>
+
+<table border="1" style="text-align: center; width:100%;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>user_id</th>
+      <th>movie_title</th>
+      <th>movie_id</th>
+      <th>rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>583304</th>
+      <td>21</td>
+      <td>Titan A.E. (2000)</td>
+      <td>3745</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>707307</th>
+      <td>21</td>
+      <td>Princess Mononoke, The (Mononoke Hime) (1997)</td>
+      <td>3000</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>70742</th>
+      <td>21</td>
+      <td>Star Wars: Episode VI - Return of the Jedi (1983)</td>
+      <td>1210</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>239644</th>
+      <td>21</td>
+      <td>South Park: Bigger, Longer and Uncut (1999)</td>
+      <td>2700</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>487530</th>
+      <td>21</td>
+      <td>Mad Max Beyond Thunderdome (1985)</td>
+      <td>3704</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>707652</th>
+      <td>21</td>
+      <td>Little Nemo: Adventures in Slumberland (1992)</td>
+      <td>2800</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>708015</th>
+      <td>21</td>
+      <td>Stop! Or My Mom Will Shoot (1992)</td>
+      <td>3268</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>706889</th>
+      <td>21</td>
+      <td>Brady Bunch Movie, The (1995)</td>
+      <td>585</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>623947</th>
+      <td>21</td>
+      <td>Iron Giant, The (1999)</td>
+      <td>2761</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>619784</th>
+      <td>21</td>
+      <td>Wild Wild West (1999)</td>
+      <td>2701</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4211</th>
+      <td>21</td>
+      <td>Bug's Life, A (1998)</td>
+      <td>2355</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>368056</th>
+      <td>21</td>
+      <td>Akira (1988)</td>
+      <td>1274</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>226126</th>
+      <td>21</td>
+      <td>Who Framed Roger Rabbit? (1988)</td>
+      <td>2987</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>41633</th>
+      <td>21</td>
+      <td>Toy Story (1995)</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>34978</th>
+      <td>21</td>
+      <td>Aladdin (1992)</td>
+      <td>588</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>33432</th>
+      <td>21</td>
+      <td>Antz (1998)</td>
+      <td>2294</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>18917</th>
+      <td>21</td>
+      <td>Bambi (1942)</td>
+      <td>2018</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>612215</th>
+      <td>21</td>
+      <td>Devil's Advocate, The (1997)</td>
+      <td>1645</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>617656</th>
+      <td>21</td>
+      <td>Prince of Egypt, The (1998)</td>
+      <td>2394</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>440983</th>
+      <td>21</td>
+      <td>Pinocchio (1940)</td>
+      <td>596</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>707674</th>
+      <td>21</td>
+      <td>Messenger: The Story of Joan of Arc, The (1999)</td>
+      <td>3053</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>708194</th>
+      <td>21</td>
+      <td>House Party 2 (1991)</td>
+      <td>3774</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Now we provide movie recommendations to the sample user by using his list of rated movies as an input.</p>
+
+<pre><code class="language-prettyprint">sample_user_movies = ratings_df[ratings_df.user_id==sample_user].movie_title.tolist()
+recommendations = get_movie_recommendations(sample_user_movies)
+
+# We get the top 20 recommended movies
+recommendations.movie_title.head(20)
+</code></pre>
+
+<p><strong>Out[]:</strong>
+<pre>1939                     Lion King, The (1994)
+324                Beauty and the Beast (1991)
+1948                Little Mermaid, The (1989)
+3055    Snow White and the Seven Dwarfs (1937)
+647                     Charlotte&apos;s Web (1973)
+679                          Cinderella (1950)
+1002                              Dumbo (1941)
+301                              Batman (1989)
+3250            Sword in the Stone, The (1963)
+303                      Batman Returns (1992)
+2252                              Mulan (1998)
+2924                Secret of NIMH, The (1982)
+2808                         Robin Hood (1973)
+3026                    Sleeping Beauty (1959)
+1781                   Jungle Book, The (1967)
+260         Back to the Future Part III (1990)
+259          Back to the Future Part II (1989)
+2558                          Peter Pan (1953)
+2347             NeverEnding Story, The (1984)
+97                  Alice in Wonderland (1951)
+Name: movie_title, dtype: object</pre></p>
+
+<p>So we see that the system recommends mostly kid&rsquo;s movies and some action movies. Neat!</p>
+
+<p>Collaborative filtering is a widely used recommendation system nowadays. It is capable of recommending new items without having to manually define them. Also, it is able to find recommendations based on hidden features that an expert wouldn&rsquo;t be able to find (for example, combination of genres or actors).</p>
+
+<p>However, it has one mayor drawback. Collaborative filtering cannot recommend items for a new user until he/she has reviewed some items. This problem is called the <a href="https://en.wikipedia.org/wiki/Cold_start" target="_blank">Cold Start Issue</a>.</p>
+
+<p>One way recommender systems overcome this issue is by using a hybrid Content + Colaborative Filtering. That is, using colaborative filtering as well as content filtering when necessary.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<p>Here are a few interesting readings on Recommendation systems.</p>
+
+<ul>
+<li><a href="http://guidetodatamining.com/chapter2/" target="_blank">A Programmer&rsquo;s guide to Data Mining Ch:2</a></li>
+<li><a href="http://www.mmds.org/" target="_blank">Mining of Massive Datasets Ch:9. Recommendation Systems</a></li>
+<li><a href="http://www.cs.cmu.edu/~wcohen/collab-filtering-tutorial.ppt" target="_blank">Collaborative Filtering: A tutorial</a></li>
+</ul>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+

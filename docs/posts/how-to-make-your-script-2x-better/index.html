@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>How to make your script better | Manugarri&#39;s blog</title>
+
+
+<link rel="stylesheet" href="/blog/css/style.css"/><link rel='stylesheet' href='https://manugarri.github.io/blog/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://manugarri.github.io/blog/"><h1 class="title is-4">Manugarri&#39;s blog</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" aria-label="email" href='mailto:hola@manugarri.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="github" href='https://github.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="linkedin" href='https://linkedin.com/in/manuelgarridopena' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path stroke-width="1.8" d="m5.839218,4.101561c0,1.211972 -0.974141,2.194011 -2.176459,2.194011s-2.176459,-0.982039 -2.176459,-2.194011c0,-1.211094 0.974141,-2.194011 2.176459,-2.194011s2.176459,0.982917 2.176459,2.194011zm0.017552,3.94922l-4.388022,0l0,14.04167l4.388022,0l0,-14.04167zm7.005038,0l-4.359939,0l0,14.04167l4.360816,0l0,-7.370999c0,-4.098413 5.291077,-4.433657 5.291077,0l0,7.370999l4.377491,0l0,-8.89101c0,-6.915523 -7.829986,-6.66365 -9.669445,-3.259423l0,-1.891237z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/manugarri' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+    </div>
+    <h2 class="subtitle is-6">May 5, 2016</h2>
+    <h1 class="title">How to make your script better</h1>
+    
+    <div class="content">
+      
+
+<p>We have all been there. The first time you realize you know enough programming language that you want to make <em>something</em>.  One of the best things the Python community has is that it encourages the newcomers to not only build amazing things, but to share them with everyone, and thus the community gets better.</p>
+
+<p>However, I have been noticing a pattern in some of these projects. You know which ones I am talking about. Those projects with 2 or 3 different python files, where the README provides a few hints on how to use it and has phrases like <em>I will add x and y functionalities</em>, and the main entrypoint has the same name as the repository.</p>
+
+<p>The thing is, some of this projects are awesome, and they have some kind of logic that I would like to use without having to think about it for myself.</p>
+
+<p>Here are 3 different ways to set up these scripts, each one being (subjectively of course) better than the previous one.</p>
+
+<p>Let&rsquo;s say we want to build a super awesome script, this script will have one functionality. It will get user input as an integer. perform a simple calculation with that integer, then print the result.</p>
+
+<h3 id="implementation-1">Implementation 1</h3>
+
+<pre><code class="language-prettyprint">#!/usr/bin/env python
+
+&quot;&quot;&quot;
+Super awesome script
+Asks the user for a number:
+ - If the number is less or equal to 100, it returns the 1st tetration of the number (power of itself)
+ - else, it returns the number squared
+&quot;&quot;&quot;
+
+__version__ = '0.1'
+
+if __name__ == '__main__':
+
+    while 1:
+        user_number = raw_input('Choose a number:\n') # input() in python3
+        if user_number.isdigit():
+            user_number = int(user_number)
+            break
+        else:
+            print('{} is not a valid number'.format(user_number))
+
+    if user_number &gt; 100:
+        print(user_number**2)
+    else:
+        print(user_number**user_number)
+</code></pre>
+
+<p>This is the implementation a newcomer to Python would probably write. It works, it asks the user for the input, validates it, performs the calculation and returns the result.</p>
+
+<p>I see two issues here:</p>
+
+<ol>
+<li><p>There is no separation between the <em>input logic</em> and the <em>calculation logic</em>. Everything is jammed together on the main loop. It works, but it would make it more difficult to modify or expand this code (you would need to read all the code line after line).</p></li>
+
+<li><p>We are doing all the input validation by ourselves. Im sure python has some libraries for this.</p></li>
+</ol>
+
+<p>Of course it does! For the next, more advanced implementation, we will use the awesome builtin module <a href="https://docs.python.org/3/library/argparse.html" target="_blank">argparse</a>.</p>
+
+<h3 id="implementation-2">Implementation 2</h3>
+
+<pre><code class="language-prettyprint">#!/usr/bin/env python
+
+&quot;&quot;&quot;
+Super awesome script
+Asks the user for a number:
+ - If the number is less or equal to 100, it returns it to the power of itself
+ - else, it returns the number squared
+&quot;&quot;&quot;
+
+import argparse
+
+__version__ = '0.2'
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--number', required=True, type=int,
+                        help='number to perform calculation')
+    values = parser.parse_args()
+    user_number = values.number
+    if user_number &gt; 100:
+        print(user_number**2)
+    else:
+        print(user_number**user_number)
+</code></pre>
+
+<p>On this step we have removed one of the issues we had with the previous implementation. By using <code>argparse</code> we are letting the library handle the validation for ourselves. This script wont run unless the input is valid.</p>
+
+<p>We still have the issue of separation of logic between user input and the calculation. Which brings us to the final implementation&hellip;</p>
+
+<h3 id="implementation-3">Implementation 3</h3>
+
+<pre><code class="language-prettyprint">#!/usr/bin/env python
+
+&quot;&quot;&quot;
+Super awesome script
+Asks the user for a number:
+ - If the number is less or equal to 100, it returns it to the power of itself
+ - else, it returns the number squared
+&quot;&quot;&quot;
+
+import argparse
+
+__version__ = '0.3'
+
+
+
+def calculation(number):
+    &quot;&quot;&quot;Performs awesome calculation&quot;&quot;&quot;
+    if number &gt; 100:
+        return number**2
+    else:
+        return number**number
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--number', required=True, type=int,
+                        help='number to perform calculation')
+    values = parser.parse_args()
+    user_number = values.number
+    calculation_result = calculation(user_number)
+    print(calculation_result)
+</code></pre>
+
+<p>On this implementation, we have done two things:</p>
+
+<ol>
+<li>We have put the burden of input validation on a mature library such as <code>argparse</code></li>
+<li>We have separated the input logic from the calculation logic.</li>
+</ol>
+
+<p>This last change has two effects; First, if we realize we want to modify the calculation (lets say we want to change the <em>100</em> for <em>200</em>, we can do that <strong>without having to read the whole code</strong>. Just need to modify the function <code>calculation</code> and everything else will still work.</p>
+
+<p>And the most important effect. If I read your code and I like the <code>calculation</code> function, <strong>now I can import it into my own code!!</strong> Think about it, on implementations # 1 and # 2, the only way to use the script was by doing:</p>
+
+<p><code>python calculation_script.py --number INTEGER</code></p>
+
+<p>Now, I have another <em>and much more powerful</em> way of using the code. For example, if I have another script, from that script I can run the calculation logic like:</p>
+
+<pre><code class="language-prettyprint">from calculation_script import calculation
+
+number = 10
+calculation_result = calculation(number)
+</code></pre>
+
+<p><strong>Isn&rsquo;t that amazing?</strong> The fact that by simply refactoring your main function, now every single other piece of code in the python ecosystem can use your code!</p>
+
+<p>Think about it next, time, it takes very little effort and it makes your script better :)</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+
