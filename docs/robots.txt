@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: manugarri.github.io/blog//sitemap.xml
